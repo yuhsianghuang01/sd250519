@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>考前衝剌系統 - 儀表板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f4f7f6;
+            --card-bg: #fff;
+            --border-color: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            padding-top: 60px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+
+        .dashboard-subtitle {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-title {
+            font-size: 1rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-change.negative {
+            color: var(--danger-color);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .progress-good {
+            background-color: var(--secondary-color);
+        }
+
+        .progress-warning {
+            background-color: var(--warning-color);
+        }
+
+        .progress-danger {
+            background-color: var(--danger-color);
+        }
+
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .content-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-light {
+            background-color: #eee;
+            color: var(--text-color);
+        }
+
+        .btn-light:hover {
+            background-color: #ddd;
+        }
+
+        .btn-success {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th {
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        .calendar td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            position: relative;
+            height: 80px;
+            vertical-align: top;
+        }
+
+        .calendar .today {
+            background-color: #e3f2fd;
+            font-weight: bold;
+        }
+
+        .calendar .event {
+            position: relative;
+            padding: 2px 5px;
+            margin-bottom: 3px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        .calendar .event-math {
+            background-color: #bbdefb;
+        }
+
+        .calendar .event-english {
+            background-color: #c8e6c9;
+        }
+
+        .calendar .event-science {
+            background-color: #ffecb3;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .task-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: #777;
+            gap: 10px;
+        }
+
+        .task-subject {
+            background-color: #e3f2fd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .score-chart {
+            height: 250px;
+            margin-top: 10px;
+        }
+
+        .upcoming-tests,
+        .recent-wrong-questions {
+            margin-top: 20px;
+        }
+
+        .test-item,
+        .wrong-question-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .test-item:last-child,
+        .wrong-question-item:last-child {
+            border-bottom: none;
+        }
+
+        .test-info,
+        .question-info {
+            flex: 1;
+        }
+
+        .test-name,
+        .question-subject {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .test-date,
+        .question-date {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .test-actions,
+        .question-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .sidebar-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .target-section {
+            margin-top: 20px;
+        }
+
+        .target-item {
+            margin-bottom: 15px;
+        }
+
+        .target-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .target-subject {
+            font-weight: 500;
+        }
+
+        .target-score {
+            color: #777;
+        }
+
+        .study-time-chart {
+            height: 200px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- 引入Font Awesome圖標庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- 引入HighCharts圖表庫 -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>考前衝剌系統</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> 儀表板</a></li>
+                <li><a href="scores.html"><i class="fas fa-chart-line"></i> 成績記錄</a></li>
+                <li><a href="review-plan.html"><i class="fas fa-calendar-alt"></i> 複習計畫</a></li>
+                <li><a href="exams.html"><i class="fas fa-book"></i> 模擬試題</a></li>
+                <li><a href="wrong-questions.html"><i class="fas fa-exclamation-circle"></i> 錯題整理</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-pie"></i> 學習報表</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">歡迎回來，同學</h1>
+            <p class="dashboard-subtitle">目前距離會考還有 <strong>42</strong> 天，繼續保持努力！</p>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-title">本週學習時間</div>
+                <div class="stat-value">8.5 小時</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 比上週增加 1.2 小時
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar progress-good" style="width: 85%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">本週完成練習</div>
+                <div class="stat-value">127 題</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 比上週增加 23 題
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar progress-good" style="width: 78%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">平均正確率</div>
+                <div class="stat-value">76%</div>
+                <div class="stat-change negative">
+                    <i class="fas fa-arrow-down"></i> 比上週下降 2%
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar progress-warning" style="width: 76%"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">錯題掌握度</div>
+                <div class="stat-value">68%</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 比上週增加 5%
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar progress-warning" style="width: 68%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="main-content">
+                <div class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <i class="fas fa-chart-line"></i> 成績趨勢
+                        </div>
+                        <button class="btn">查看詳情</button>
+                    </div>
+                    <div class="score-chart" id="scoreChart"></div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <i class="fas fa-calendar-alt"></i> 本週複習計畫
+                        </div>
+                        <button class="btn" onclick="location.href='review-plan.html'">管理計畫</button>
+                    </div>
+                    <table class="calendar">
+                        <thead>
+                            <tr>
+                                <th>一</th>
+                                <th>二</th>
+                                <th>三</th>
+                                <th>四</th>
+                                <th>五</th>
+                                <th>六</th>
+                                <th>日</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    2
+                                    <div class="event event-math">數學: 函數</div>
+                                </td>
+                                <td class="today">
+                                    3
+                                    <div class="event event-english">英語: 句型練習</div>
+                                    <div class="event event-science">理化: 力學</div>
+                                </td>
+                                <td>
+                                    4
+                                    <div class="event event-math">數學: 三角函數</div>
+                                </td>
+                                <td>
+                                    5
+                                    <div class="event event-science">理化: 電學</div>
+                                </td>
+                                <td>
+                                    6
+                                    <div class="event event-math">數學: 統計</div>
+                                    <div class="event event-english">英語: 閱讀</div>
+                                </td>
+                                <td>
+                                    7
+                                    <div class="event event-math">數學: 綜合練習</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <i class="fas fa-tasks"></i> 今日任務
+                        </div>
+                        <button class="btn">查看所有任務</button>
+                    </div>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-info">
+                                <div class="task-name">完成英語閱讀理解練習</div>
+                                <div class="task-meta">
+                                    <span class="task-subject">英語</span>
+                                    <span>預計用時: 30分鐘</span>
+                                </div>
+                            </div>
+                            <div class="task-actions">
+                                <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-light"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-info">
+                                <div class="task-name">複習數學函數相關題型</div>
+                                <div class="task-meta">
+                                    <span class="task-subject">數學</span>
+                                    <span>預計用時: 45分鐘</span>
+                                </div>
+                            </div>
+                            <div class="task-actions">
+                                <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-light"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-info">
+                                <div class="task-name">整理理化電學公式卡片</div>
+                                <div class="task-meta">
+                                    <span class="task-subject">理化</span>
+                                    <span>預計用時: 20分鐘</span>
+                                </div>
+                            </div>
+                            <div class="task-actions">
+                                <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-light"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-info">
+                                <div class="task-name">複習上週錯題</div>
+                                <div class="task-meta">
+                                    <span class="task-subject">綜合</span>
+                                    <span>預計用時: 40分鐘</span>
+                                </div>
+                            </div>
+                            <div class="task-actions">
+                                <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-light"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="content-section upcoming-tests">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <i class="fas fa-book"></i> 即將到來的測驗
+                        </div>
+                        <button class="btn">查看所有測驗</button>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <div class="test-name">數學第二次模擬考</div>
+                            <div class="test-date">5月10日 (星期五)</div>
+                        </div>
+                        <div class="test-actions">
+                            <button class="btn">開始準備</button>
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <div class="test-name">英語聽力測驗</div>
+                            <div class="test-date">5月15日 (星期三)</div>
+                        </div>
+                        <div class="test-actions">
+                            <button class="btn">開始準備</button>
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <div class="test-name">理化期中考</div>
+                            <div class="test-date">5月20日 (星期一)</div>
+                        </div>
+                        <div class="test-actions">
+                            <button class="btn">開始準備</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="profile-section">
+                        <img src="https://via.placeholder.com/60" alt="Profile" class="profile-image">
+                        <div class="profile-info">
+                            <h3>李同學</h3>
+                            <p>國三上學期</p>
+                        </div>
+                    </div>
+                    <div class="target-section">
+                        <h3>目標分數</h3>
+                        <div class="target-item">
+                            <div class="target-header">
+                                <span class="target-subject">數學</span>
+                                <span class="target-score">90 分</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar progress-good" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="target-item">
+                            <div class="target-header">
+                                <span class="target-subject">英語</span>
+                                <span class="target-score">85 分</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar progress-good" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="target-item">
+                            <div class="target-header">
+                                <span class="target-subject">理化</span>
+                                <span class="target-score">88 分</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar progress-good" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section recent-wrong-questions">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <i class="fas fa-exclamation-circle"></i> 最近錯題
+                        </div>
+                        <button class="btn">查看所有錯題</button>
+                    </div>
+                    <div class="wrong-question-item">
+                        <div class="question-info">
+                            <div class="question-subject">數學</div>
+                            <div class="question-date">5月1日</div>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn">查看</button>
+                        </div>
+                    </div>
+                    <div class="wrong-question-item">
+                        <div class="question-info">
+                            <div class="question-subject">英語</div>
+                            <div class="question-date">5月2日</div>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn">查看</button>
+                        </div>
+                    </div>
+                    <div class="wrong-question-item">
+                        <div class="question-info">
+                            <div class="question-subject">理化</div>
+                            <div class="question-date">5月3日</div>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn">查看</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>學習時間分佈</h3>
+                    <div class="study-time-chart" id="studyTimeChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入系統模塊的JavaScript -->
+    <script src="js/scoreRecord.js"></script>
+    <script src="js/reviewPlan.js"></script>
+    <script src="js/wrongQuestionManager.js"></script>
+    <script src="js/examSystem.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 渲染成績走勢圖
+            Highcharts.chart('scoreChart', {
+                // ...existing code...
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>考前衝剌系統規格書</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background: #f4f4f4;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: #2c3e50;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            background-color: #fffacd;
+            padding: 10px;
+            border-left: 4px solid #ffd700;
+            margin: 10px 0;
+        }
+
+        .diagram {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="section">
+        <h1>🎯 考前衝剌系統規格書</h1>
+        <p>版本: 1.0.0</p>
+        <p>日期: 2024年5月30日</p>
+
+        <h2>📋 目錄</h2>
+        <ol>
+            <li><a href="#intro">系統簡介</a></li>
+            <li><a href="#architecture">系統架構</a></li>
+            <li><a href="#features">功能規格</a>
+                <ol>
+                    <li><a href="#feature1">平日各科成績記錄功能</a></li>
+                    <li><a href="#feature2">每日複習計畫表</a></li>
+                    <li><a href="#feature3">模擬試題卷系統</a></li>
+                    <li><a href="#feature4">錯題整理表格模板</a></li>
+                    <li><a href="#feature5">學習成果統計與報表</a></li>
+                </ol>
+            </li>
+            <li><a href="#datamodel">數據模型</a></li>
+            <li><a href="#ui">用戶界面</a></li>
+            <li><a href="#tech">技術規格</a></li>
+        </ol>
+    </div>
+
+    <div id="intro" class="section">
+        <h2>1. 系統簡介</h2>
+        <p>考前衝剌系統是一套針對國中學生設計的學習輔助平台，旨在幫助學生高效準備會考和一般考試。系統整合了成績記錄、學習計劃、模擬測試、錯題整理和學習成果分析等功能，為學生提供全方位的考前準備支持。</p>
+
+        <h3>系統目標</h3>
+        <ul>
+            <li>幫助學生系統性記錄和分析學習成績</li>
+            <li>提供客製化的學習計劃和複習建議</li>
+            <li>模擬真實考試環境，提供多元題型練習</li>
+            <li>自動整理錯題，強化學習弱點</li>
+            <li>通過數據分析和視覺化報表，幫助學生了解學習進度和成效</li>
+        </ul>
+
+        <h3>使用者對象</h3>
+        <ul>
+            <li>國中一至三年級學生</li>
+            <li>準備會考的九年級學生</li>
+            <li>教師和輔導老師</li>
+            <li>家長（監督學習進度）</li>
+        </ul>
+    </div>
+
+    <div id="architecture" class="section">
+        <h2>2. 系統架構</h2>
+
+        <h3>整體架構</h3>
+        <div class="diagram">
+            <pre>
++----------------------------------------------------------+
+|                   考前衝剌系統                             |
++----------------------------------------------------------+
+|                                                          |
+|  +---------------+  +---------------+  +---------------+ |
+|  | 成績記錄模組   |  | 學習計劃模組   |  | 模擬試題模組   | |
+|  +---------------+  +---------------+  +---------------+ |
+|                                                          |
+|  +---------------+  +---------------+                    |
+|  | 錯題整理模組   |  | 成果分析模組   |                    |
+|  +---------------+  +---------------+                    |
+|                                                          |
++----------------------------------------------------------+
+|                       數據存儲層                          |
+|  +---------------+  +---------------+  +---------------+ |
+|  |  Cookie 存儲   |  |  JSON 文件    |  |  本地存儲      | |
+|  +---------------+  +---------------+  +---------------+ |
++----------------------------------------------------------+
+            </pre>
+        </div>
+
+        <h3>技術架構</h3>
+        <ul>
+            <li><strong>前端</strong>: HTML5, CSS3, JavaScript, jQuery, HighCharts</li>
+            <li><strong>數據存儲</strong>: Cookies, 本地JSON文件</li>
+            <li><strong>後端處理</strong>: C# (可選)</li>
+        </ul>
+    </div>
+
+    <div id="features" class="section">
+        <h2>3. 功能規格</h2>
+
+        <div id="feature1">
+            <h3>3.1 平日各科成績記錄功能</h3>
+            <p>允許學生記錄各科目的成績，並追蹤成績變化趨勢。</p>
+
+            <h4>功能描述</h4>
+            <ul>
+                <li>新增、刪除、修改、查詢成績記錄</li>
+                <li>支持按學年、科目、考試類型、日期等進行篩選</li>
+                <li>自動計算平均分和進步幅度</li>
+                <li>提供成績趨勢圖表</li>
+                <li>支持設定目標分數和達成情況追蹤</li>
+            </ul>
+
+            <h4>數據存儲</h4>
+            <p>使用JSON格式存儲，同時保存在Cookies和文件系統中(sd\成績.json.txt)</p>
+
+            <h4>功能界面</h4>
+            <table>
+                <tr>
+                    <th>界面元素</th>
+                    <th>描述</th>
+                </tr>
+                <tr>
+                    <td>成績輸入表單</td>
+                    <td>包含學年、科目、考試類型、日期、分數、滿分等字段</td>
+                </tr>
+                <tr>
+                    <td>成績列表視圖</td>
+                    <td>以表格形式展示所有成績記錄，支持排序和篩選</td>
+                </tr>
+                <tr>
+                    <td>成績趨勢圖</td>
+                    <td>使用折線圖顯示各科目成績變化趨勢</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="feature2">
+            <h3>3.2 每日複習計畫表</h3>
+            <p>幫助學生創建和管理每日學習計劃，確保各科目均衡複習。</p>
+
+            <h4>功能描述</h4>
+            <ul>
+                <li>新增、刪除、修改、查詢複習計劃</li>
+                <li>支持按科目、日期、計劃項目等進行組織和查看</li>
+                <li>提供計劃完成度追蹤和提醒功能</li>
+                <li>自動生成建議的複習計劃（基於錯題和弱點分析）</li>
+                <li>支持拖拽調整計劃順序和優先級</li>
+            </ul>
+
+            <h4>必要欄位</h4>
+            <ul>
+                <li>科目（如國、英、數）</li>
+                <li>月份</li>
+                <li>日期</li>
+                <li>計劃主項次</li>
+                <li>次項次</li>
+                <li>備註</li>
+                <li>完成狀態</li>
+                <li>預計時間</li>
+                <li>實際耗時（選填）</li>
+            </ul>
+
+            <h4>數據存儲</h4>
+            <p>使用JSON格式存儲，同時保存在Cookies和文件系統中(sd\每日複習計畫表.json.txt)</p>
+        </div>
+
+        <div id="feature3">
+            <h3>3.3 模擬試題卷系統</h3>
+            <p>提供多樣化的模擬試題，支持自定義試卷和計時測試。</p>
+
+            <h4>功能描述</h4>
+            <ul>
+                <li>題庫管理（新增、刪除、修改、查詢題目）</li>
+                <li>自定義試卷生成（可選擇題型、難度、範圍等）</li>
+                <li>支持多種題型：
+                    <ul>
+                        <li>是非題</li>
+                        <li>選擇題（單選/多選）</li>
+                        <li>填空題</li>
+                        <li>簡答題</li>
+                        <li>速讀題</li>
+                        <li>記憶題</li>
+                    </ul>
+                </li>
+                <li>計時測試功能（整卷限時和單題限時）</li>
+                <li>自動評分和答案解析</li>
+                <li>錯題自動收集</li>
+                <li>隨機抽題功能</li>
+                <li>模擬真實會考環境的界面設計</li>
+            </ul>
+
+            <h4>題目分類</h4>
+            <ul>
+                <li>按學年（國一、國二、國三）</li>
+                <li>按科目（國、英、數等）</li>
+                <li>按難度（基礎、中等、進階）</li>
+                <li>按章節/知識點</li>
+            </ul>
+
+            <h4>試卷設置</h4>
+            <ul>
+                <li>整卷時間限制</li>
+                <li>各題型配分</li>
+                <li>各題獨立時間限制（可選）</li>
+                <li>試卷總分設置</li>
+                <li>是否顯示答案解析</li>
+                <li>是否允許中途暫停</li>
+            </ul>
+
+            <h4>數據關聯</h4>
+            <p>試卷結果將與複習計劃和錯題整理系統關聯，提供學習建議和弱點分析。</p>
+        </div>
+
+        <div id="feature4">
+            <h3>3.4 錯題整理表格模板</h3>
+            <p>自動收集和整理做錯的題目，幫助有針對性地複習。</p>
+
+            <h4>功能描述</h4>
+            <ul>
+                <li>從模擬試題系統自動收集錯題</li>
+                <li>支持手動添加錯題記錄</li>
+                <li>提供錯題詳情填寫（原因分析、正確觀念等）</li>
+                <li>錯題重做和掌握度自評功能</li>
+                <li>錯題分類和標籤功能</li>
+                <li>生成針對性的複習建議</li>
+            </ul>
+
+            <h4>錯題記錄欄位</h4>
+            <ul>
+                <li>學年（國一、國二、國三）</li>
+                <li>科目（國、英、數等）</li>
+                <li>作題日期</li>
+                <li>題號</li>
+                <li>題目內容</li>
+                <li>學生答案</li>
+                <li>正確答案</li>
+                <li>錯誤原因（用戶填寫）</li>
+                <li>正確觀念（用戶填寫）</li>
+                <li>掌握狀態（未複習/已複習/已掌握）</li>
+                <li>重做次數</li>
+                <li>最近重做日期</li>
+                <li>重做正確率</li>
+            </ul>
+
+            <h4>數據存儲</h4>
+            <p>使用JSON格式存儲，同時保存在Cookies和文件系統中(sd\錯題綜整面版.json.txt)</p>
+        </div>
+
+        <div id="feature5">
+            <h3>3.5 學習成果統計與報表</h3>
+            <p>提供全方位的學習數據分析，幫助了解學習效果和進展。</p>
+
+            <h4>功能描述</h4>
+            <ul>
+                <li>綜合成績統計和分析</li>
+                <li>錯題分布和類型分析</li>
+                <li>學習時間和效率分析</li>
+                <li>知識點掌握度評估</li>
+                <li>進步曲線和達標情況</li>
+                <li>多維度交叉分析（如科目間對比、時間段對比等）</li>
+                <li>可自定義報表參數和時間範圍</li>
+            </ul>
+
+            <h4>報表類型</h4>
+            <ul>
+                <li>成績趨勢圖（折線圖）</li>
+                <li>知識點掌握度雷達圖</li>
+                <li>錯題類型分布餅圖</li>
+                <li>學習時間分配條形圖</li>
+                <li>週期性進步對比圖</li>
+                <li>科目間成績對比圖</li>
+            </ul>
+
+            <h4>數據互動</h4>
+            <p>支持從報表直接跳轉到相關錯題重做或知識點複習，形成閉環學習系統。</p>
+
+            <h4>技術實現</h4>
+            <p>使用HighCharts實現動態圖表展示，支持多種圖表類型和交互功能。</p>
+
+            <h4>數據存儲</h4>
+            <p>綜合使用各功能模塊的數據，並將分析結果存儲在sd\錯題資料.json.txt中</p>
+        </div>
+    </div>
+
+    <div id="datamodel" class="section">
+        <h2>4. 數據模型</h2>
+
+        <h3>4.1 成績記錄數據格式</h3>
+        <pre><code>
+{
+  "records": [
+    {
+      "id": "唯一識別碼",
+      "academic_year": "學年",
+      "subject": "科目",
+      "exam_type": "考試類型",
+      "date": "日期",
+      "score": 分數,
+      "total_score": 滿分,
+      "percentage": 百分比,
+      "ranking": "名次（可選）",
+      "notes": "備註"
+    },
+    {...}
+  ]
+}
+        </code></pre>
+
+        <h3>4.2 複習計劃數據格式</h3>
+        <pre><code>
+{
+  "plans": [
+    {
+      "id": "唯一識別碼",
+      "subject": "科目",
+      "month": 月份,
+      "date": 日期,
+      "main_item": "計劃主項次",
+      "sub_item": "次項次",
+      "notes": "備註",
+      "status": "完成狀態",
+      "estimated_time": 預計時間（分鐘）,
+      "actual_time": 實際耗時（分鐘）,
+      "created_at": "創建時間",
+      "updated_at": "更新時間"
+    },
+    {...}
+  ]
+}
+        </code></pre>
+
+        <h3>4.3 試題和試卷數據格式</h3>
+        <pre><code>
+{
+  "questions": [
+    {
+      "id": "唯一識別碼",
+      "academic_year": "學年",
+      "subject": "科目",
+      "chapter": "章節",
+      "type": "題型",
+      "difficulty": "難度",
+      "content": "題目內容",
+      "options": ["選項A", "選項B", ...],
+      "answer": "正確答案",
+      "explanation": "答案解析",
+      "time_limit": 時間限制（秒）,
+      "tags": ["標籤1", "標籤2", ...]
+    },
+    {...}
+  ],
+  
+  "exams": [
+    {
+      "id": "唯一識別碼",
+      "title": "試卷標題",
+      "description": "試卷描述",
+      "total_time": 總時間（分鐘）,
+      "total_score": 總分,
+      "question_ids": ["題目ID1", "題目ID2", ...],
+      "created_at": "創建時間"
+    },
+    {...}
+  ],
+  
+  "exam_results": [
+    {
+      "id": "唯一識別碼",
+      "exam_id": "試卷ID",
+      "date": "作答日期",
+      "score": 得分,
+      "completion_time": 完成時間（分鐘）,
+      "question_results": [
+        {
+          "question_id": "題目ID",
+          "user_answer": "用戶答案",
+          "is_correct": 是否正確,
+          "time_spent": 花費時間（秒）
+        },
+        {...}
+      ]
+    },
+    {...}
+  ]
+}
+        </code></pre>
+
+        <h3>4.4 錯題整理數據格式</h3>
+        <pre><code>
+{
+  "wrong_questions": [
+    {
+      "id": "唯一識別碼",
+      "question_id": "原題目ID",
+      "academic_year": "學年",
+      "subject": "科目",
+      "date": "作題日期",
+      "question_number": "題號",
+      "content": "題目內容",
+      "correct_answer": "正確答案",
+      "user_answer": "用戶答案",
+      "error_reason": "錯誤原因",
+      "correct_concept": "正確觀念",
+      "mastery_status": "掌握狀態",
+      "review_count": 重做次數,
+      "last_review_date": "最近重做日期",
+      "correct_rate": 重做正確率
+    },
+    {...}
+  ]
+}
+        </code></pre>
+
+        <h3>4.5 學習報表數據格式</h3>
+        <pre><code>
+{
+  "analytics": {
+    "period": {
+      "start_date": "開始日期",
+      "end_date": "結束日期"
+    },
+    "score_analytics": {
+      "subjects": ["科目1", "科目2", ...],
+      "average_scores": [平均分1, 平均分2, ...],
+      "progress": [進步幅度1, 進步幅度2, ...],
+      "target_achievement": [達標率1, 達標率2, ...]
+    },
+    "wrong_question_analytics": {
+      "total_count": 總錯題數,
+      "by_subject": {
+        "科目1": 錯題數1,
+        "科目2": 錯題數2,
+        ...
+      },
+      "by_type": {
+        "類型1": 錯題數1,
+        "類型2": 錯題數2,
+        ...
+      },
+      "most_frequent_errors": [
+        {"pattern": "錯誤模式1", "count": 次數1},
+        {"pattern": "錯誤模式2", "count": 次數2},
+        ...
+      ]
+    },
+    "time_analytics": {
+      "total_study_time": 總學習時間（分鐘）,
+      "by_subject": {
+        "科目1": 時間1,
+        "科目2": 時間2,
+        ...
+      },
+      "efficiency": {
+        "科目1": 效率指數1,
+        "科目2": 效率指數2,
+        ...
+      }
+    },
+    "mastery_analytics": {
+      "overall_mastery": 整體掌握度,
+      "by_subject": {
+        "科目1": 掌握度1,
+        "科目2": 掌握度2,
+        ...
+      },
+      "by_chapter": {
+        "章節1": 掌握度1,
+        "章節2": 掌握度2,
+        ...
+      }
+    }
+  }
+}
+        </code></pre>
+    </div>
+
+    <div id="ui" class="section">
+        <h2>5. 用戶界面</h2>
+
+        <h3>5.1 總體界面佈局</h3>
+        <p>系統採用現代化響應式設計，包含以下主要界面元素：</p>
+        <ul>
+            <li>頂部導航欄 - 系統主要功能模塊入口</li>
+            <li>側邊欄 - 模塊內子功能和快捷操作</li>
+            <li>主內容區 - 功能主界面</li>
+            <li>底部狀態欄 - 系統狀態和快速操作</li>
+        </ul>
+
+        <h3>5.2 主要視圖</h3>
+        <table>
+            <tr>
+                <th>視圖名稱</th>
+                <th>主要功能</th>
+                <th>關鍵界面元素</th>
+            </tr>
+            <tr>
+                <td>儀表板</td>
+                <td>整體學習狀況一覽</td>
+                <td>成績趨勢圖、今日計劃、待複習錯題、學習進度指標等</td>
+            </tr>
+            <tr>
+                <td>成績記錄</td>
+                <td>管理和查看成績</td>
+                <td>成績輸入表單、成績列表、成績統計圖</td>
+            </tr>
+            <tr>
+                <td>複習計劃</td>
+                <td>制定和管理學習計劃</td>
+                <td>日曆視圖、計劃列表、計劃編輯表單</td>
+            </tr>
+            <tr>
+                <td>模擬試題</td>
+                <td>做題和考試</td>
+                <td>題庫瀏覽、試卷生成器、測試界面、結果頁面</td>
+            </tr>
+            <tr>
+                <td>錯題整理</td>
+                <td>管理和複習錯題</td>
+                <td>錯題列表、錯題詳情、錯題統計、知識點關聯圖</td>
+            </tr>
+            <tr>
+                <td>學習報表</td>
+                <td>數據分析和可視化</td>
+                <td>各類統計圖表、篩選工具、數據導出選項</td>
+            </tr>
+        </table>
+
+        <h3>5.3 交互設計</h3>
+        <ul>
+            <li>拖拽操作 - 用於調整計劃順序、組織試題等</li>
+            <li>實時反饋 - 輸入驗證、操作結果提示</li>
+            <li>快捷鍵支持 - 提高操作效率</li>
+            <li>進度指示 - 長時間操作過程中提供視覺反饋</li>
+            <li>響應式設計 - 適配不同屏幕大小的設備</li>
+        </ul>
+    </div>
+
+    <div id="tech" class="section">
+        <h2>6. 技術規格</h2>
+
+        <h3>6.1 前端技術</h3>
+        <ul>
+            <li>HTML5/CSS3 - 頁面結構和樣式</li>
+            <li>JavaScript - 業務邏輯和交互</li>
+            <li>jQuery - DOM操作和AJAX請求</li>
+            <li>HighCharts - 數據可視化圖表</li>
+            <li>Bootstrap (可選) - 響應式設計框架</li>
+            <li>LocalStorage/SessionStorage - 本地數據緩存</li>
+            <li>Cookie - 用戶設置和小型數據存儲</li>
+        </ul>
+
+        <h3>6.2 數據存儲與處理</h3>
+        <ul>
+            <li>前端本地存儲 - 使用Cookie和LocalStorage保存用戶數據</li>
+            <li>JSON文件 - 系統數據持久化存儲</li>
+            <li>C# (可選) - 用於更複雜的后端處理和數據操作</li>
+        </ul>
+
+        <h3>6.3 安全性考慮</h3>
+        <ul>
+            <li>數據備份機制 - 定期自動備份用戶數據</li>
+            <li>輸入驗證 - 防止不合法數據輸入</li>
+            <li>使用者認證 - 基本的用戶身份識別（可選）</li>
+        </ul>
+
+        <h3>6.4 性能考慮</h3>
+        <ul>
+            <li>數據分頁 - 處理大量數據時的性能優化</li>
+            <li>資源延遲加載 - 提高初始加載速度</li>
+            <li>數據緩存 - 減少重複計算和處理</li>
+        </ul>
+
+        <h3>6.5 擴展性</h3>
+        <ul>
+            <li>模塊化設計 - 便於功能擴展和替換</li>
+            <li>插件架構 - 支持添加新功能模塊</li>
+            <li>數據導入導出 - 與其他系統數據交換</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>7. 系統優化和未來發展</h2>
+
+        <h3>7.1 系統優化方向</h3>
+        <ul>
+            <li>智能推薦 - 基於學習數據自動推薦適合的學習內容和方法</li>
+            <li>學習模式分析 - 識別最有效的學習時間和方式</li>
+            <li>自適應學習路徑 - 根據學習成效自動調整學習計劃</li>
+            <li>多設備同步 - 支持在不同設備間無縫切換</li>
+            <li>社區功能 - 支持學習互助和分享（可選）</li>
+        </ul>
+
+        <h3>7.2 未來功能擴展</h3>
+        <ul>
+            <li>AI輔助解題 - 提供智能化的解題指導</li>
+            <li>語音輸入/輸出 - 支持語音交互</li>
+            <li>學習遊戲化 - 增加學習趣味性和動力</li>
+            <li>家長/教師端 - 提供監督和輔導功能</li>
+            <li>多人協作學習 - 支持小組學習和互助</li>
+            <li>學習資源整合 - 連接外部學習資源和教材</li>
+        </ul>
+
+        <div class="highlight">
+            <h3>核心優化重點</h3>
+            <p>現有系統優化的首要重點是強化數據分析能力，通過深度洞察學習數據，幫助學生發現知識盲點和學習弱點，並提供精準的學習建議。同時，提升用戶體驗和系統易用性，確保學生能夠輕鬆高效地使用系統，專注於學習本身。</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
