@@ -696,6 +696,7 @@
             }
         }
     </style>
+    <script src="js/jquery-3.6.0.min.js"></script>
     <!-- 引入Font Awesome圖標庫 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- 引入HighCharts圖表庫 -->
@@ -2376,6 +2377,89 @@
                 }
             }
         });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // 修復按鈕事件綁定
+            $("#generateExam").click(function () {
+                generateNewExam();
+            });
+
+            $("#addQuestion").click(function () {
+                addQuestion();
+            });
+
+            $("#viewResults").click(function () {
+                viewAllResults();
+            });
+
+            $("#importQuestions").click(function () {
+                importQuestions();
+            });
+        });
+
+        // 生成新試卷功能
+        function generateNewExam() {
+            $.ajax({
+                url: '/api/exams/generate',
+                type: 'POST',
+                success: function (response) {
+                    alert('新試卷生成成功！');
+                    location.reload(); // 重新載入頁面顯示新試卷
+                },
+                error: function (xhr) {
+                    alert('生成試卷失敗：' + xhr.responseText);
+                    console.error('生成試卷錯誤：', xhr);
+                }
+            });
+        }
+
+        // 添加題目功能
+        function addQuestion() {
+            window.location.href = '/sdweb/question_add.html';
+        }
+
+        // 查看所有結果功能
+        function viewAllResults() {
+            window.location.href = '/sdweb/results.html';
+        }
+
+        // 導入題目功能
+        function importQuestions() {
+            // 創建文件上傳輸入框
+            var fileInput = $('<input type="file" accept=".csv,.xlsx,.xls" style="display:none">');
+            $('body').append(fileInput);
+
+            fileInput.click();
+
+            fileInput.change(function (e) {
+                var file = e.target.files[0];
+                if (!file) return;
+
+                var formData = new FormData();
+                formData.append('file', file);
+
+                $.ajax({
+                    url: '/api/questions/import',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert('題目導入成功！');
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        alert('題目導入失敗：' + xhr.responseText);
+                        console.error('導入題目錯誤：', xhr);
+                    }
+                });
+
+                // 移除臨時創建的輸入元素
+                fileInput.remove();
+            });
+        }
     </script>
 </body>
 
