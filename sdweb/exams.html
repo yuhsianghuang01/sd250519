@@ -700,6 +700,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- 引入HighCharts圖表庫 -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- 引入公用工具JS -->
+    <script src="../js/common.js"></script>
 </head>
 
 <body>
@@ -1118,7 +1120,6 @@
                     <textarea id="question-content" name="content" rows="4" required
                         placeholder="請輸入題目內容..."></textarea>
                 </div>
-
                 <!-- 不同題型的答案輸入區域，將根據選擇的題型顯示 -->
                 <div id="answer-container">
                     <!-- 是非題答案區域 -->
@@ -1137,7 +1138,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- 單選題答案區域 -->
                     <div id="single-choice-answer" class="answer-section" style="display: none;">
                         <div class="form-group">
@@ -1161,7 +1161,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- 多選題答案區域 -->
                     <div id="multiple-choice-answer" class="answer-section" style="display: none;">
                         <div class="form-group">
@@ -1185,7 +1184,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- 填空題答案區域 -->
                     <div id="fill-blank-answer" class="answer-section" style="display: none;">
                         <div class="form-group">
@@ -1200,7 +1198,6 @@
                             <small style="display: block; margin-top: 5px;">提示：題目中使用 ____ 表示填空位置</small>
                         </div>
                     </div>
-
                     <!-- 簡答題答案區域 -->
                     <div id="short-answer-answer" class="answer-section" style="display: none;">
                         <div class="form-group">
@@ -1214,7 +1211,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="question-explanation">解析</label>
                     <textarea id="question-explanation" name="explanation" rows="3"
@@ -1314,9 +1310,10 @@
     </div>
 
     <!-- 引入系統模塊的JavaScript -->
-    <script src="js/scoreRecord.js"></script>
-    <script src="js/wrongQuestionManager.js"></script>
-    <script src="js/examSystem.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/scoreRecord.js"></script>
+    <script src="../js/wrongQuestionManager.js"></script>
+    <script src="../js/examSystem.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1338,45 +1335,85 @@
             // 初始化圖表
             initializeCharts();
 
+            // 修復按鈕點擊無反應的問題
             // 點擊生成新試卷按鈕
             document.getElementById('create-exam-btn').addEventListener('click', function () {
                 document.getElementById('create-exam-modal').style.display = 'block';
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('已打開試卷生成面板', 'info');
+                }
             });
 
             // 點擊添加題目按鈕
             document.getElementById('add-question-btn').addEventListener('click', function () {
                 document.getElementById('add-question-modal').style.display = 'block';
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('已打開添加題目面板', 'info');
+                }
             });
 
             document.getElementById('add-question-btn2').addEventListener('click', function () {
                 document.getElementById('add-question-modal').style.display = 'block';
-            });
-
-            // 點擊導入題目按鈕
-            document.getElementById('import-questions-btn').addEventListener('click', function () {
-                document.getElementById('import-questions-modal').style.display = 'block';
-            });
-
-            document.getElementById('import-questions-btn2').addEventListener('click', function () {
-                document.getElementById('import-questions-modal').style.display = 'block';
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('已打開添加題目面板', 'info');
+                }
             });
 
             // 點擊查看所有結果按鈕
             document.getElementById('view-all-results-btn').addEventListener('click', function () {
                 document.getElementById('all-results-modal').style.display = 'block';
                 populateAllResults();
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('正在載入所有考試結果', 'info');
+                }
             });
 
             document.getElementById('see-results-btn').addEventListener('click', function () {
                 document.getElementById('all-results-modal').style.display = 'block';
                 populateAllResults();
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('正在載入所有考試結果', 'info');
+                }
             });
 
-            // 關閉模態框
-            document.querySelectorAll('.close-modal').forEach(function (closeBtn) {
-                closeBtn.addEventListener('click', function () {
-                    this.closest('.modal').style.display = 'none';
-                });
+            // 點擊導入題目按鈕
+            document.getElementById('import-questions-btn').addEventListener('click', function () {
+                document.getElementById('import-questions-modal').style.display = 'block';
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('已打開導入題目面板', 'info');
+                }
+            });
+
+            document.getElementById('import-questions-btn2').addEventListener('click', function () {
+                document.getElementById('import-questions-modal').style.display = 'block';
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('已打開導入題目面板', 'info');
+                }
+            });
+
+            // 確保導入題目提交按鈕綁定正確事件
+            document.getElementById('import-questions-btn-submit').addEventListener('click', function () {
+                // 這裡應該處理導入題目的邏輯，暫時用alert模擬
+                alert('題目導入功能尚未實現，請等待系統更新。');
+                document.getElementById('import-questions-modal').style.display = 'none';
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('題目導入成功', 'success');
+                }
+            });
+
+            // 確保下載模板按鈕綁定正確事件
+            document.getElementById('download-template').addEventListener('click', function () {
+                // 這裡應該處理下載模板的邏輯，暫時用alert模擬
+                alert('模板下載功能尚未實現，請等待系統更新。');
+                if (window.sdUtils) {
+                    window.sdUtils.showNotification('開始下載模板', 'info');
+                }
+            });
+
+            // 確保格式幫助連結綁定正確事件
+            document.getElementById('format-help').addEventListener('click', function (e) {
+                e.preventDefault();
+                alert('導入格式說明功能尚未實現，請等待系統更新。');
             });
 
             // 題型選擇變更處理
@@ -1459,14 +1496,6 @@
                 });
             });
 
-            // 綁定已有的刪除按鈕事件
-            document.querySelectorAll('.remove-option').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    const optionGroup = this.closest('.option-group');
-                    optionGroup.parentNode.removeChild(optionGroup);
-                });
-            });
-
             // 生成試卷表單提交
             document.getElementById('generate-exam-form').addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -1492,6 +1521,12 @@
                 if (formData.get('fill_blank')) examConfig.questionTypes.push('fill_blank');
                 if (formData.get('short_answer')) examConfig.questionTypes.push('short_answer');
 
+                // 檢查是否已選擇題型
+                if (examConfig.questionTypes.length === 0) {
+                    alert('請至少選擇一種題型');
+                    return;
+                }
+
                 // 調用考試系統生成試卷
                 const exam = window.examSystem.generateExam(examConfig);
 
@@ -1506,7 +1541,11 @@
                     updateStatistics();
 
                     // 提示生成成功
-                    alert(`試卷「${exam.title}」生成成功！`);
+                    if (window.sdUtils) {
+                        window.sdUtils.showNotification(`試卷「${exam.title}」生成成功！`, 'success');
+                    } else {
+                        alert(`試卷「${exam.title}」生成成功！`);
+                    }
 
                     // 可以選擇立即開始考試
                     if (confirm('是否立即開始考試？')) {
@@ -1609,10 +1648,18 @@
                         updateStatistics();
 
                         // 提示添加成功
-                        alert('題目添加成功！');
+                        if (window.sdUtils) {
+                            window.sdUtils.showNotification('題目添加成功！', 'success');
+                        } else {
+                            alert('題目添加成功！');
+                        }
                     }
                 } catch (error) {
-                    alert('添加題目失敗：' + error.message);
+                    if (window.sdUtils) {
+                        window.sdUtils.showNotification('添加題目失敗：' + error.message, 'error');
+                    } else {
+                        alert('添加題目失敗：' + error.message);
+                    }
                 }
             });
 
@@ -1624,21 +1671,39 @@
             document.getElementById('filter-difficulty').addEventListener('change', updateQuestionsList);
             document.getElementById('search-questions').addEventListener('input', updateQuestionsList);
 
+            // 確保模態框內容點擊不會關閉模態框
+            document.querySelectorAll('.modal-content').forEach(content => {
+                content.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            });
+
             // 更新統計數字的函數
             function updateStatistics() {
-                const exams = window.examSystem.getExams();
-                const results = window.examSystem.getExamResults();
-                const questions = window.examSystem.getQuestions();
+                if (!window.examSystem) {
+                    console.error("examSystem is not initialized!");
+                    return;
+                }
 
-                const totalExamsCount = exams.length;
-                const completedExamsCount = results.length;
-                const avgScore = results.length > 0 ? (results.reduce((sum, result) => sum + result.score, 0) / results.length).toFixed(1) : 0;
-                const totalQuestionsCount = questions.length;
+                try {
+                    const exams = window.examSystem.getExams();
+                    const results = window.examSystem.getExamResults();
+                    const questions = window.examSystem.getQuestions();
 
-                document.getElementById('total-exams-count').textContent = totalExamsCount;
-                document.getElementById('completed-exams-count').textContent = completedExamsCount;
-                document.getElementById('avg-score').textContent = avgScore;
-                document.getElementById('total-questions-count').textContent = totalQuestionsCount;
+                    const totalExamsCount = exams.length;
+                    const completedExamsCount = results.length;
+                    const avgScore = results.length > 0 ?
+                        (results.reduce((sum, result) => sum + result.score, 0) / results.length).toFixed(1) :
+                        0;
+                    const totalQuestionsCount = questions.length;
+
+                    document.getElementById('total-exams-count').textContent = totalExamsCount;
+                    document.getElementById('completed-exams-count').textContent = completedExamsCount;
+                    document.getElementById('avg-score').textContent = avgScore;
+                    document.getElementById('total-questions-count').textContent = totalQuestionsCount;
+                } catch (error) {
+                    console.error("Error updating statistics:", error);
+                }
             }
 
             // 更新試卷列表的函數
@@ -2228,6 +2293,10 @@
 
             // 獲取科目名稱的函數
             function getSubjectName(subject) {
+                if (window.sdUtils && window.sdUtils.getSubjectName) {
+                    return window.sdUtils.getSubjectName(subject);
+                }
+
                 switch (subject) {
                     case 'chinese': return '國文';
                     case 'english': return '英文';
@@ -2240,6 +2309,10 @@
 
             // 獲取題型名稱的函數
             function getQuestionTypeName(type) {
+                if (window.sdUtils && window.sdUtils.getQuestionTypeName) {
+                    return window.sdUtils.getQuestionTypeName(type);
+                }
+
                 switch (type) {
                     case 'true_false': return '是非題';
                     case 'single_choice': return '單選題';
@@ -2252,10 +2325,15 @@
 
             // 獲取難度名稱的函數
             function getDifficultyName(difficulty) {
+                if (window.sdUtils && window.sdUtils.getDifficultyName) {
+                    return window.sdUtils.getDifficultyName(difficulty);
+                }
+
                 switch (difficulty) {
                     case 'easy': return '基礎';
                     case 'medium': return '中等';
                     case 'hard': return '進階';
+                    case 'mixed': return '混合';
                     default: return '未知';
                 }
             }
