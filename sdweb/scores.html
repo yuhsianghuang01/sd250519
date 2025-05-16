@@ -395,8 +395,8 @@
     <!-- 引入HighCharts圖表庫 -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <!-- 引入公用工具JS -->
-    <script src="../js/common.js"></script>
-    <script src="../js/scoreRecord.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/scoreRecord.js"></script>
 </head>
 
 <body>
@@ -686,187 +686,187 @@
             // 重置添加成績表單pan class="close-modal">&times;</span>
             function resetAddScoreForm() {
                 <div id="score-detail-content">
-                document.getElementById('add-score-form').reset();                <!-- 成績詳情內容將通過JavaScript動態填充 -->
-                document.getElementById('details-list').innerHTML = '';
+                    document.getElementById('add-score-form').reset();                <!-- 成績詳情內容將通過JavaScript動態填充 -->
+                    document.getElementById('details-list').innerHTML = '';
             }v>
 
-                // 添加分類按鈕點擊事件
-                document.getElementById('add-detail-btn').addEventListener('click', function() {ipt >
-                    addDetailItem();
+                    // 添加分類按鈕點擊事件
+                    document.getElementById('add-detail-btn').addEventListener('click', function() {ipt >
+                        addDetailItem();
             });entLoaded', function () {
 
-                    function addDetailItem(category = '', score = '', total = '') {
-                        const detailsList = document.getElementById('details-list');ord) {
+                        function addDetailItem(category = '', score = '', total = '') {
+                            const detailsList = document.getElementById('details-list');ord) {
                 const detailId = Date.now();{
                 ) { return []; },
-                const detailHtml = `() {
-                    <div class="detail-item" id="detail-${detailId}">
-                        <div class="form-row">
-                            <div class="form-col"> averageScore: 0,
-                                <div class="form-group">      highestScore: 0,
-                                    <label for="detail-category-${detailId}">分類名稱</label>
-                                    <input type="text" id="detail-category-${detailId}" class="form-control detail-category"
-                                        value="${category}" placeholder="例如：文法部分、選擇題等">      };
-                                </div>       },
-                            </div>                        getTrendData: function () { return []; },
-                            <div class="form-col">nction (data) { return data; }
-                                <div class="form-group">
-                                    <label for="detail-score-${detailId}">得分</label>
-                                    <input type="number" id="detail-score-${detailId}" class="form-control detail-score"
-                                        value="${score}" min="0" placeholder="得分">
-                                </div>const stats = window.scoreRecord.getStatistics();
-                            </div>tById('total-exams').textContent = stats.count || 0;
-                            <div class="form-col"> = stats.highestScore || 0;
-                                <div class="form-group">rage-score').textContent = stats.averageScore.toFixed(1) || 0;
-                                    <label for="detail-total-${detailId}">總分</label>
-                                    <input type="number" id="detail-total-${detailId}" class="form-control detail-total"
-                                        value="${total}" min="1" placeholder="總分">
-                                </div>
-                            </div>t firstScore = trendData[0].score;
-                            <div class="form-col" style="flex: 0 0 auto; align-self: flex-end;">
-                                <button type="button" class="btn btn-danger remove-detail" data-id="${detailId}">   const progress = ((lastScore - firstScore) / firstScore * 100).toFixed(1);
-                                    <i class="fas fa-trash"></i>                    document.getElementById('score-progress').textContent = progress > 0 ? '+' + progress : progress;
-                                </button>
-                            </div>mentById('score-progress').textContent = '0.0';
-                        </div>   }
-                    </div>
+                    const detailHtml = `() {
+                        <div class="detail-item" id="detail-${detailId}">
+                            <div class="form-row">
+                                <div class="form-col"> averageScore: 0,
+                                    <div class="form-group">      highestScore: 0,
+                                        <label for="detail-category-${detailId}">分類名稱</label>
+                                        <input type="text" id="detail-category-${detailId}" class="form-control detail-category"
+                                            value="${category}" placeholder="例如：文法部分、選擇題等">      };
+                                    </div>       },
+                                </div>                        getTrendData: function () { return []; },
+                                <div class="form-col">nction (data) { return data; }
+                                    <div class="form-group">
+                                        <label for="detail-score-${detailId}">得分</label>
+                                        <input type="number" id="detail-score-${detailId}" class="form-control detail-score"
+                                            value="${score}" min="0" placeholder="得分">
+                                    </div>const stats = window.scoreRecord.getStatistics();
+                                </div>tById('total-exams').textContent = stats.count || 0;
+                                <div class="form-col"> = stats.highestScore || 0;
+                                    <div class="form-group">rage-score').textContent = stats.averageScore.toFixed(1) || 0;
+                                        <label for="detail-total-${detailId}">總分</label>
+                                        <input type="number" id="detail-total-${detailId}" class="form-control detail-total"
+                                            value="${total}" min="1" placeholder="總分">
+                                    </div>
+                                </div>t firstScore = trendData[0].score;
+                                <div class="form-col" style="flex: 0 0 auto; align-self: flex-end;">
+                                    <button type="button" class="btn btn-danger remove-detail" data-id="${detailId}">   const progress = ((lastScore - firstScore) / firstScore * 100).toFixed(1);
+                                        <i class="fas fa-trash"></i>                    document.getElementById('score-progress').textContent = progress > 0 ? '+' + progress : progress;
+                                    </button>
+                                </div>mentById('score-progress').textContent = '0.0';
+                            </div>   }
+                        </div>
                 `;新成績列表
                 
                 detailsList.insertAdjacentHTML('beforeend', detailHtml);
                 
                 // 綁定刪除按鈕事件
                 document.querySelector(`#detail-${detailId} .remove-detail`).addEventListener('click', function() {s() {
-                    document.getElementById(`detail-${detailId}`).remove();勢圖
+                        document.getElementById(`detail-${detailId}`).remove();勢圖
                 });hart('score-trend-chart', {
-                }
-                type: 'line'
-                // 添加成績表單提交事件
-                document.getElementById('add-score-form').addEventListener('submit', function(e) {
-                    e.preventDefault();  text: '成績趨勢'
+                    }
+                    type: 'line'
+                    // 添加成績表單提交事件
+                    document.getElementById('add-score-form').addEventListener('submit', function(e) {
+                        e.preventDefault();  text: '成績趨勢'
 
-                // 收集表單數據
-                const formData = {1月', '2月', '3月', '4月', '5月']
-                subject: document.getElementById('score-subject').value,
-                academic_year: document.getElementById('score-academic-year').value,xis: {
-                    title: document.getElementById('score-title').value, {
-                    score: parseInt(document.getElementById('score-value').value, 10),分數'
-                total_score: parseInt(document.getElementById('score-total').value, 10),
-                date: document.getElementById('score-date').value,
-                details: []
+                    // 收集表單數據
+                    const formData = {1月', '2月', '3月', '4月', '5月']
+                    subject: document.getElementById('score-subject').value,
+                    academic_year: document.getElementById('score-academic-year').value,xis: {
+                        title: document.getElementById('score-title').value, {
+                        score: parseInt(document.getElementById('score-value').value, 10),分數'
+                    total_score: parseInt(document.getElementById('score-total').value, 10),
+                    date: document.getElementById('score-date').value,
+                    details: []
                 };
-                data: [75, 78, 82, 80, 85]
-                // 收集細節分類
-                document.querySelectorAll('.detail-item').forEach(function(item) {
+                    data: [75, 78, 82, 80, 85]
+                    // 收集細節分類
+                    document.querySelectorAll('.detail-item').forEach(function(item) {
                     const category = item.querySelector('.detail-category').value;  data: [70, 72, 75, 80, 78]
                     const score = parseInt(item.querySelector('.detail-score').value, 10); }, {
                     const total = parseInt(item.querySelector('.detail-total').value, 10);                        name: '國文',
-                ata: [85, 82, 88, 85, 90]
-                if (category && !isNaN(score) && !isNaN(total)) {
-                    formData.details.push({
-                        category,
-                        score, 析圖表
+                    ata: [85, 82, 88, 85, 90]
+                    if (category && !isNaN(score) && !isNaN(total)) {
+                        formData.details.push({
+                            category,
+                            score, 析圖表
                             totalhart('subject-analysis-chart', {
-                    });
+                        });
                     }  type: 'column'
                 });
 
-                // 添加成績記錄  text: '各科目平均分數'
-                if (window.scoreRecord.addScore(formData)) {
-                    // 關閉模態框
-                    document.getElementById('add-score-modal').style.display = 'none';', '英文', '數學', '自然', '社會']
+                    // 添加成績記錄  text: '各科目平均分數'
+                    if (window.scoreRecord.addScore(formData)) {
+                        // 關閉模態框
+                        document.getElementById('add-score-modal').style.display = 'none';', '英文', '數學', '自然', '社會']
 
                     // 更新頁面數據xis: {
-                    updateStatistics(); {
-                    updateScoresList();分數'
-                initCharts();
-                updateSubjectDetails();
-                generateScoreAnalysis(); series: [{
-                    name: '平均分數',
-                // 顯示成功訊息data: [86, 75, 80, 82, 88]
-                if (window.sdUtils) {
-                    window.sdUtils.showNotification('成績添加成功！', 'success');
+                        updateStatistics(); {
+                        updateScoresList();分數'
+                    initCharts();
+                    updateSubjectDetails();
+                    generateScoreAnalysis(); series: [{
+                        name: '平均分數',
+                    // 顯示成功訊息data: [86, 75, 80, 82, 88]
+                    if (window.sdUtils) {
+                        window.sdUtils.showNotification('成績添加成功！', 'success');
                     } else {
-                    alert('成績添加成功！');布圖
+                        alert('成績添加成功！');布圖
                     }hart('score-distribution-chart', {
-                } else {
+                    } else {
                     // 顯示錯誤訊息  type: 'pie'
                     if (window.sdUtils) {
-                    window.sdUtils.showNotification('添加成績失敗，請檢查輸入內容。', 'error');
+                        window.sdUtils.showNotification('添加成績失敗，請檢查輸入內容。', 'error');
                     } else {
-                    alert('添加成績失敗，請檢查輸入內容。');
+                        alert('添加成績失敗，請檢查輸入內容。');
                     }
                 }
             });
 
-                // 過濾器事件 },
-                document.getElementById('filter-subject').addEventListener('change', updateScoresList);   {name: '80-89分', y: 5 },
-                document.getElementById('filter-academic-year').addEventListener('change', updateScoresList);      {name: '70-79分', y: 4 },
-                document.getElementById('filter-time-range').addEventListener('change', updateScoresList);         {name: '60-69分', y: 2 },
-                document.getElementById('filter-sort').addEventListener('change', updateScoresList);               {name: '60分以下', y: 1 }
-                document.getElementById('overview-time-range').addEventListener('change', function() {                        ]
-                updateStatistics();]
-                initCharts();
+                    // 過濾器事件 },
+                    document.getElementById('filter-subject').addEventListener('change', updateScoresList);   {name: '80-89分', y: 5 },
+                    document.getElementById('filter-academic-year').addEventListener('change', updateScoresList);      {name: '70-79分', y: 4 },
+                    document.getElementById('filter-time-range').addEventListener('change', updateScoresList);         {name: '60-69分', y: 2 },
+                    document.getElementById('filter-sort').addEventListener('change', updateScoresList);               {name: '60分以下', y: 1 }
+                    document.getElementById('overview-time-range').addEventListener('change', function() {                        ]
+                    updateStatistics();]
+                    initCharts();
             });
 
-                // 更新統計數據            // 更新成績列表
-                function updateStatistics() {teScoresList() {
+                    // 更新統計數據            // 更新成績列表
+                    function updateStatistics() {teScoresList() {
                 const timeRange = document.getElementById('overview-time-range').value; = document.getElementById('scores-table').querySelector('tbody');
-                let filters = { };ssage');
+                    let filters = { };ssage');
 
-                if (timeRange !== 'all') {
+                    if (timeRange !== 'all') {
                     const now = new Date();nst filters = {
-                    let startDate = new Date(now);                    subject: document.getElementById('filter-subject').value,
-                ument.getElementById('filter-sort').value,
-                if (timeRange === 'month') {
-                    startDate.setMonth(now.getMonth() - 1);                };
+                        let startDate = new Date(now);                    subject: document.getElementById('filter-subject').value,
+                    ument.getElementById('filter-sort').value,
+                    if (timeRange === 'month') {
+                        startDate.setMonth(now.getMonth() - 1);                };
                     } else if (timeRange === 'quarter') {
-                    startDate.setMonth(now.getMonth() - 3);
+                        startDate.setMonth(now.getMonth() - 3);
                     } else if (timeRange === 'year') {                if (filters.subject === 'all') filters.subject = null;
-                startDate.setFullYear(now.getFullYear() - 1);
+                    startDate.setFullYear(now.getFullYear() - 1);
                     }
-                const scores = window.scoreRecord.getAllScores(filters);
-                filters.startDate = startDate.toISOString();
-                filters.endDate = now.toISOString();
+                    const scores = window.scoreRecord.getAllScores(filters);
+                    filters.startDate = startDate.toISOString();
+                    filters.endDate = now.toISOString();
                 }.innerHTML = '';
 
-                const statistics = window.scoreRecord.getStatistics(filters);                if (scores.length === 0) {
+                    const statistics = window.scoreRecord.getStatistics(filters);                if (scores.length === 0) {
                 const allScores = window.scoreRecord.getAllScores(filters);ock';
-                return;
-                document.getElementById('total-tests').textContent = statistics.count;
-                document.getElementById('average-score').textContent = statistics.averageScore.toFixed(1);
-                document.getElementById('highest-score').textContent = statistics.highestScore;
+                    return;
+                    document.getElementById('total-tests').textContent = statistics.count;
+                    document.getElementById('average-score').textContent = statistics.averageScore.toFixed(1);
+                    document.getElementById('highest-score').textContent = statistics.highestScore;
 
                 // 最近分數
                 if (allScores.length > 0) {
                     const sortedScores = [...allScores].sort((a, b) => new Date(b.date) - new Date(a.date));const row = document.createElement('tr');
-                document.getElementById('latest-score').textContent = sortedScores[0].score;
+                    document.getElementById('latest-score').textContent = sortedScores[0].score;
                 } else {
-                    document.getElementById('latest-score').textContent = '0';const formattedDate = examDate.toLocaleDateString('zh-TW');
+                        document.getElementById('latest-score').textContent = '0';const formattedDate = examDate.toLocaleDateString('zh-TW');
                 }
             }
-                re.score / score.full_score * 100).toFixed(1);
-                // 更新成績列表
-                function updateScoresList() {
+                    re.score / score.full_score * 100).toFixed(1);
+                    // 更新成績列表
+                    function updateScoresList() {
                 const subject = document.getElementById('filter-subject').value;
                 const academicYear = document.getElementById('filter-academic-year').value;entage >= 80) {
                 const timeRange = document.getElementById('filter-time-range').value;;
                 const sortType = document.getElementById('filter-sort').value; else if (percentage >= 60) {
-                    scoreClass = 'medium-score';
-                // 構建過濾條件
-                let filters = { };
+                        scoreClass = 'medium-score';
+                    // 構建過濾條件
+                    let filters = { };
 
-                if (subject !== 'all') {
-                    filters.subject = subject;
+                    if (subject !== 'all') {
+                        filters.subject = subject;
                 }
 
-                if (academicYear !== 'all') {${score.exam_name}</td>
+                    if (academicYear !== 'all') {${score.exam_name}</td>
                 filters.academic_year = academicYear;
             }
         lass = "highlight-score ${scoreClass}" > ${ percentage }%</td >
                 if (timeRange !== 'all') {
             <td>
-            const now = new Date();                            <button class="btn view-score-btn" data-id="${score.id}">查看</button>
-            let startDate = new Date(now);utton class="btn btn-danger delete-score-btn" data-id="${score.id}">刪除</button>
+                const now = new Date();                            <button class="btn view-score-btn" data-id="${score.id}">查看</button>
+                let startDate = new Date(now);utton class="btn btn-danger delete-score-btn" data-id="${score.id}">刪除</button>
 
             if (timeRange === 'week') {
                 startDate.setDate(now.getDate() - 7);
@@ -1012,418 +1012,3 @@
                     }).join('');            document.getElementById('learning-suggestions').textContent = '建議您增加英文詞彙量的積累和閱讀練習，同時保持數學的練習頻率，鞏固已有的知識點。對於國文和社會科目，可以嘗試更高難度的題目來提升能力。';
                      });
                     detailsHtml = `    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</html>
-</body>
-</script> }); } analysisContainer.innerHTML = analysisHtml; `; </div> 繼續堅持學習和複習，相信您的成績會有更大的提升！</p>
-<p style="margin-top: 10px;">您的平均分數為${statistics.averageScore.toFixed(1)}分，最高分為${statistics.highestScore}分。
-<p style="margin-top: 10px;">${distributionAnalysis}</p> ${subjectAnalysis ? `<p style="margin-top: 10px;">
-    ${subjectAnalysis}</p>` : ''} <p>${overallAnalysis}</p>
-<div class="analysis-content"> const analysisHtml = ` // 合併分析 } distributionAnalysis =
-    '您的成績分佈較為平均，建議繼續按照當前的學習方式進行，同時針對較弱的環節加強練習。'; } else { distributionAnalysis =
-    '您的大部分測驗成績都非常優秀，建議可以嘗試更具挑戰性的題目，進一步提高自己的能力。'; } else if (highScoreCount > statistics.count * 0.5) {
-    distributionAnalysis = '您有較多的測驗成績未達及格標準，建議重點複習基礎知識，確保掌握核心概念。'; if (lowScoreCount > statistics.count * 0.3) { const
-    highScoreCount = statistics.distribution[4].count; // 90-100分 const lowScoreCount =
-    statistics.distribution[0].count; // 0-59分 let distributionAnalysis = ''; // 分析分數分佈 }
-    建議您調整學習時間分配，適當增加對${worstSubjectName}的複習。`;
-    而<strong>${worstSubjectName}</strong>科目需要加強，平均分數為${worstSubject.averageScore.toFixed(1)}分。 subjectAnalysis =
-    `您在<strong>${bestSubjectName}</strong>科目表現最佳，平均分數達到${bestSubjectName.toFixed(1)}分。 const worstSubjectName =
-    window.sdUtils ? window.sdUtils.getSubjectName(worstSubject.subject) : worstSubject.subject; const bestSubjectName =
-    window.sdUtils ? window.sdUtils.getSubjectName(bestSubject.subject) : bestSubject.subject; if (bestSubject &&
-    worstSubject) { let subjectAnalysis = ''; // 分析科目表現 } overallAnalysis = '您的整體表現需要改進，建議重新檢視學習方法和複習策略。'; } else {
-    overallAnalysis = '您的整體表現尚可，建議加強基礎知識。'; } else if (statistics.averageScore >= 60) { overallAnalysis =
-    '您的整體表現良好，還有提升空間。'; } else if (statistics.averageScore >= 70) { overallAnalysis = '您的整體表現非常優秀，繼續保持！'; if
-    (statistics.averageScore >= 80) { let overallAnalysis = ''; // 分析整體表現 } worstSubject =
-    sortedSubjects[sortedSubjects.length - 1]; bestSubject = sortedSubjects[0]; const sortedSubjects =
-    [...subjectPerformance].sort((a, b) => b.averageScore - a.averageScore); if (subjectPerformance.length > 1) { let
-    worstSubject = null; let bestSubject = null; // 找出最好和最差的科目 } return; analysisContainer.innerHTML = '<p>
-        需要至少3條成績記錄才能生成有意義的分析。</p>'; if (statistics.count < 3) { // 如果沒有足夠數據則不顯示分析 const
-        subjectPerformance=window.scoreRecord.getSubjectPerformance(); const
-        statistics=window.scoreRecord.getStatistics(); const
-        analysisContainer=document.getElementById('score-analysis'); function generateScoreAnalysis() { // 生成成績分析建議 }
-        subjectDetailsContainer.innerHTML=detailsHtml; `; </div> }).join('')} `; </div>
-</div>
-</div>
-<div class="progress-bar" style="width: ${subject.averageScore}%;"></div>
-<div class="progress-bar-container"> ${subject.averageScore.toFixed(1)}分 <div class="detail-score ${scoreClass}">
-        <div class="detail-category">${window.sdUtils ? window.sdUtils.getSubjectName(subject.subject) :
-            subject.subject} (${subject.count}次測驗)</div>
-        <div class="detail-item"> return ` } scoreClass = 'bad-score'; } else { scoreClass = 'medium-score'; } else if
-            (subject.averageScore >= 60) { scoreClass = 'good-score'; if (subject.averageScore >= 80) { let scoreClass =
-            ''; // 根據平均分數決定顏色 ${sortedPerformance.map(subject => { <div class="score-details"> const detailsHtml = ` //
-                生成科目詳情 const sortedPerformance = [...subjectPerformance].sort((a, b) => b.averageScore -
-                a.averageScore); // 排序科目表現，由高到低 } return; if (subjectPerformance.length === 0) { // 如果沒有數據則不顯示
-                subjectDetailsContainer.innerHTML = ''; // 清空容器 const subjectDetailsContainer =
-                document.getElementById('subject-details'); const subjectPerformance =
-                window.scoreRecord.getSubjectPerformance(); function updateSubjectDetails() { // 更新科目詳情 } }); }] })) y:
-                item.count name: item.range, data: statistics.distribution.map(item => ({ colorByPoint: true, name:
-                '分數區間', series: [{ }, } } format: '<b>{point.name}</b>: {point.percentage:.1f} %' enabled: true,
-                dataLabels: { cursor: 'pointer', allowPointSelect: true, pie: { plotOptions: { }, pointFormat:
-                '{point.name}: <b>{point.y}次</b> ({point.percentage:.1f}%)' tooltip: { }, text: '分數分佈' title: { }, type:
-                'pie' chart: { Highcharts.chart('score-distribution-chart', { const statistics =
-                window.scoreRecord.getStatistics(); // 分數分佈圖 }); }] showInLegend: false })), count: item.count y:
-                item.averageScore, data: subjectPerformance.map(item => ({ name: '平均分數', series: [{ }, } colorByPoint:
-                true column: { plotOptions: { }, pointFormat: '平均分數: {point.y:.1f}分<br>測驗次數: {point.count}次'
-                headerFormat: '<b>{point.key}</b><br>', tooltip: { }, max: 100 min: 0, }, text: '平均分數' title: { yAxis: {
-                }, } text: '科目' title: { categories: subjectPerformance.map(item => window.sdUtils ?
-                window.sdUtils.getSubjectName(item.subject) : item.subject), xAxis: { }, text: '各科目平均成績' title: { },
-                type: 'column' chart: { Highcharts.chart('subject-performance-chart', { const subjectPerformance =
-                window.scoreRecord.getSubjectPerformance(); // 科目表現對比圖 }); series: seriesData }, } } enabled: true
-                marker: { line: { plotOptions: { }, pointFormat: '{point.x}: {point.y}分' headerFormat:
-                '<b>{series.name}</b><br>', tooltip: { }, max: 100 min: 0, }, text: '分數' title: { yAxis: { }, } text:
-                '日期' title: { type: 'category', xAxis: { }, text: '成績趨勢' title: { }, type: 'line' chart: {
-                Highcharts.chart('score-trend-chart', { // 成績趨勢圖 }); }; data: subjectData.map(item => [item.date,
-                item.score]) name: window.sdUtils ? window.sdUtils.getSubjectName(subject) : subject, return { const
-                subjectData = trendData.filter(item => item.subject === subject); const seriesData =
-                subjects.map(subject => { const subjects = [...new Set(trendData.map(item => item.subject))]; const
-                trendData = window.scoreRecord.getTrendData(filters); } filters.endDate = now.toISOString();
-                filters.startDate = startDate.toISOString(); } startDate.setFullYear(now.getFullYear() - 1); } else if
-                (timeRange === 'year') { startDate.setMonth(now.getMonth() - 3); } else if (timeRange === 'quarter') {
-                startDate.setMonth(now.getMonth() - 1); if (timeRange === 'month') { let startDate = new Date(now);
-                const now = new Date(); if (timeRange !== 'all') { let filters = {}; const timeRange =
-                document.getElementById('overview-time-range').value; // 獲取成績趨勢數據 function initCharts() { // 初始化圖表 } } }
-                alert('刪除失敗，請重試'); } else { window.sdUtils.showNotification('刪除失敗，請重試', 'error'); if (window.sdUtils) {
-                // 顯示錯誤訊息 } else { } alert('成績記錄已刪除'); } else { window.sdUtils.showNotification('成績記錄已刪除', 'success');
-                if (window.sdUtils) { // 顯示成功訊息 generateScoreAnalysis(); updateSubjectDetails(); initCharts();
-                updateScoresList(); updateStatistics(); // 更新頁面數據 if (window.scoreRecord.deleteScore(scoreId)) {
-                function deleteScore(scoreId) { // 刪除成績 } document.getElementById('view-score-modal').style.display =
-                'block'; // 打開模態框 }; } document.getElementById('view-score-modal').style.display = 'none';
-                deleteScore(this.dataset.id); if (confirm('確定要刪除此成績記錄嗎？此操作無法撤銷。')) { deleteBtn.onclick = function() {
-                deleteBtn.dataset.id = scoreId; // 綁定刪除按鈕事件 `; ${detailsHtml} </div>
-            <p><strong>分數：</strong><span class="highlight-score ${scoreClass}">${score.score}/${score.total_score}
-                    (${percentage}%)</span></p>
-            <p><strong>日期：</strong>${date}</p>
-            <p><strong>學年：</strong>${score.academic_year}</p>
-            <p><strong>科目：</strong>${window.sdUtils ? window.sdUtils.getSubjectName(score.subject) : score.subject}</p>
-            <div style="margin-top: 15px;">
-                <h2>${score.title}</h2> detailContent.innerHTML = ` } `;
-            </div> ${detailItems} <div class="score-details">
-                <h3 style="margin-top: 20px;">分類詳情</h3>
-                </body>
-
-                </html>
