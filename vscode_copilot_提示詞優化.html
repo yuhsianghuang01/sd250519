@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Copilot 提示詞優化指南</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #0078d7;
+        }
+
+        .tip-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #0078d7;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background-color: #fff8f0;
+            border-left: 4px solid #ff8c00;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .examples {
+            margin-top: 20px;
+        }
+
+        .example {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>VSCode Copilot 提示詞優化指南</h1>
+
+    <div class="tip-box">
+        本指南幫助您撰寫更有效的提示詞，讓 GitHub Copilot 在 VSCode 中提供更準確、更有用的幫助。
+    </div>
+
+    <h2>提示詞的基本原則</h2>
+    <p>撰寫高效提示詞的關鍵原則：</p>
+    <ul>
+        <li><strong>明確具體</strong>：清晰描述您想要完成的任務</li>
+        <li><strong>提供上下文</strong>：包含相關背景資訊</li>
+        <li><strong>指定格式</strong>：說明您希望收到的回應格式</li>
+        <li><strong>分步驟</strong>：對複雜任務，將其分解為步驟</li>
+        <li><strong>示例說明</strong>：提供具體示例說明您的需求</li>
+    </ul>
+
+    <h2>提示詞結構優化</h2>
+
+    <h3>1. 任務描述部分</h3>
+    <div class="example">
+        <h4>基本結構</h4>
+        <pre><code>我想要 [具體動作]，功能需求是 [詳細描述功能]。</code></pre>
+
+        <h4>優化後</h4>
+        <pre><code>幫我 [具體動作]，具體要求如下：
+1. [需求 1]
+2. [需求 2]
+3. [格式要求或輸出格式]
+請使用 [程式語言/框架] 實現。</code></pre>
+    </div>
+
+    <h3>2. 環境與條件說明</h3>
+    <div class="example">
+        <h4>基本結構</h4>
+        <pre><code>幫我寫個程式。</code></pre>
+
+        <h4>優化後</h4>
+        <pre><code>我正在使用 [框架/庫 版本] 開發一個 [項目類型] 應用。
+目前環境：
+- Node.js: v18.x
+- 資料庫: MongoDB
+- 前端框架: React 18
+
+請幫我實現 [具體功能]，需要考慮 [特定環境限制/版本要求]。</code></pre>
+    </div>
+
+    <h3>3. 功能詳細說明</h3>
+    <div class="example">
+        <h4>基本結構</h4>
+        <pre><code>做個用戶登錄。</code></pre>
+
+        <h4>優化後</h4>
+        <pre><code>請實現一個用戶登錄功能，包含以下要點：
+1. 支持郵箱和密碼登錄
+2. 實現記住我功能
+3. 登錄失敗時顯示具體錯誤信息
+4. 添加登錄嘗試次數限制（5次後鎖定10分鐘）
+5. 防止SQL注入攻擊
+
+技術要求：使用 Express.js 後端，React 前端，JWT 做身份驗證。</code></pre>
+    </div>
+
+    <h2>場景優化提示詞</h2>
+
+    <h3>1. 程式碼問題修復</h3>
+    <div class="example">
+        <pre><code>我的代碼報錯：[錯誤訊息]。以下是出錯代碼：
+
+```
+[出錯代碼片段]
+```
+
+這段代碼的目的是 [功能描述]。請幫我找出錯誤，並提供修復方案，同時解釋錯誤原因。</code></pre>
+    </div>
+
+    <h3>2. 代碼優化與重構</h3>
+    <div class="example">
+        <pre><code>請幫我優化以下代碼，重點關注：
+1. 性能優化
+2. 代碼可讀性
+3. 最佳實踐應用
+4. [特定優化目標]
+
+```
+[需要優化的代碼]
+```
+
+請逐步解釋優化思路和改動原因。</code></pre>
+    </div>
+
+    <h3>3. API 開發</h3>
+    <div class="example">
+        <pre><code>請幫我設計並實現一個 [功能描述] 的 RESTful API，要求：
+1. 遵循 RESTful 設計原則
+2. 包含以下端點：[列出主要端點]
+3. 使用 [框架/技術]
+4. 實現基本的錯誤處理和參數驗證
+5. 提供 API 文檔示例
+
+數據模型如下：
+[描述數據模型或提供示例]</code></pre>
+    </div>
+
+    <h3>4. 資料庫查詢優化</h3>
+    <div class="example">
+        <pre><code>我有以下 SQL 查詢，運行較慢：
+
+```sql
+[SQL查詢語句]
+```
+
+資料表結構：
+- 表1: [表結構描述]
+- 表2: [表結構描述]
+
+索引狀況：[現有索引]
+數據量：[約略數據量]
+
+請幫我優化這個查詢，提高執行效率，並解釋優化原理。</code></pre>
+    </div>
+
+    <h2>提示詞技巧進階篇</h2>
+
+    <h3>1. 具體情境設定</h3>
+    <div class="tip-box">
+        透過設定具體的專案背景和角色，讓 Copilot 能更精準地理解您的需求。
+    </div>
+    <div class="example">
+        <pre><code>角色：你是一位資深的前端架構師
+項目：我們正在開發一個高流量的電子商務網站
+任務：請為商品詳情頁面設計組件結構，需要考慮：
+1. 組件重用性
+2. 狀態管理方案
+3. 性能優化策略
+4. 適配移動端與桌面端
+5. 支援國際化
+
+請提出架構建議和關鍵代碼示例。</code></pre>
+    </div>
+
+    <h3>2. 迭代式提問</h3>
+    <div class="tip-box">
+        將複雜問題拆分為多個步驟，逐步引導 Copilot。
+    </div>
+    <div class="example">
+        <p>步驟 1：基本需求說明</p>
+        <pre><code>我需要開發一個文件處理系統，能支援多種文件格式（PDF、Word、Excel）的上傳、預覽和轉換。請先幫我分析這個項目的技術選型。</code></pre>
+
+        <p>步驟 2：深入特定問題</p>
+        <pre><code>基於你推薦的技術棧，請幫我實現文件上傳功能，包含：
+1. 拖拽上傳
+2. 檔案大小和類型驗證
+3. 上傳進度顯示
+4. 斷點續傳功能</code></pre>
+
+        <p>步驟 3：處理特殊情況</p>
+        <pre><code>對於上傳的PDF檔案，我需要實現線上預覽和文本提取功能。請提供實現方案和關鍵代碼。</code></pre>
+    </div>
+
+    <h3>3. 要求解釋與教學</h3>
+    <div class="tip-box">
+        請求 Copilot 不只提供解決方案，還要解釋背後的原理，幫助您學習。
+    </div>
+    <div class="example">
+        <pre><code>請幫我實現一個 React 中的自訂 Hook 來處理無限滾動，並請：
+1. 解釋這個 Hook 的設計思路
+2. 標註關鍵部分的代碼並說明其作用
+3. 討論潛在性能問題和優化方向
+4. 提供一個使用示例</code></pre>
+    </div>
+
+    <h2>提示詞模板範例</h2>
+
+    <h3>1. 功能開發模板</h3>
+    <div class="example">
+        <pre><code>【任務】開發一個 [功能名稱]
+
+【技術環境】
+- 前端：[框架/庫]
+- 後端：[框架/語言] 
+- 資料庫：[資料庫類型]
+
+【功能需求】
+1. [具體需求點1]
+2. [具體需求點2]
+3. [具體需求點3]
+
+【技術要求】
+1. [技術限制或規範1]
+2. [技術限制或規範2]
+
+【預期輸出】
+1. 主要代碼實現
+2. 關鍵函數說明
+3. 使用示例
+
+請提供完整可運行的解決方案。</code></pre>
+    </div>
+
+    <h3>2. 程式碼審查模板</h3>
+    <div class="example">
+        <pre><code>【代碼審查請求】
+
+```
+[待審查代碼]
+```
+
+請從以下幾個維度審查這段代碼：
+1. 代碼邏輯與功能實現
+2. 性能考量
+3. 安全性問題
+4. 代碼可讀性與風格
+5. 最佳實踐應用
+6. 可能的邊界情況處理
+
+請提供具體的改進建議和示例代碼。</code></pre>
+    </div>
+
+    <h3>3. 問題診斷模板</h3>
+    <div class="example">
+        <pre><code>【問題描述】
+我遇到了 [具體問題現象]，環境信息如下：
+- 操作系統：[OS版本]
+- 瀏覽器/運行環境：[環境信息]
+- 相關套件版本：[版本信息]
+
+【錯誤信息】
+```
+[錯誤日誌或信息]
+```
+
+【相關代碼】
+```
+[可能有問題的代碼片段]
+```
+
+【已嘗試的解決方法】
+1. [已嘗試方法1]
+2. [已嘗試方法2]
+
+請幫我診斷問題原因並提供解決方案。</code></pre>
+    </div>
+
+    <h2>常見錯誤與改進</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>常見錯誤</th>
+                <th>改進建議</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>提示太籠統</td>
+                <td>添加具體需求、限制條件和預期結果</td>
+            </tr>
+            <tr>
+                <td>缺少關鍵信息</td>
+                <td>提供技術環境、版本信息、數據結構等</td>
+            </tr>
+            <tr>
+                <td>需求不明確</td>
+                <td>使用數字列表明確標記每個需求點</td>
+            </tr>
+            <tr>
+                <td>未指定輸出格式</td>
+                <td>明確說明需要的輸出形式（代碼、解釋、步驟等）</td>
+            </tr>
+            <tr>
+                <td>過於複雜的單次請求</td>
+                <td>將複雜問題拆分為多個連續的簡單問題</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>總結與最佳實踐</h2>
+    <div class="tip-box">
+        <p>高效的 Copilot 提示詞應該：</p>
+        <ul>
+            <li>具體明確 - 描述清晰的目標和要求</li>
+            <li>結構化 - 使用標題、編號列表組織內容</li>
+            <li>提供上下文 - 包含必要的背景信息和技術環境</li>
+            <li>指明限制 - 明確技術限制和特殊要求</li>
+            <li>引導思考 - 要求解釋和教學，而不只是代碼輸出</li>
+        </ul>
+    </div>
+
+    <div class="tip-box warning">
+        <p><strong>重要提醒：</strong></p>
+        <p>即使使用最優化的提示詞，請始終審查 GitHub Copilot 生成的代碼，確保其符合您的需求、安全標準和最佳實踐。Copilot 是工具，不能替代專業的開發判斷。</p>
+    </div>
+</body>
+
+</html>
