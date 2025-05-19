@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>工作管理系统开发指南</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 20px auto }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db }
+        .badge { background: #3498db; color: white; padding: 3px 8px; border-radius: 5px }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 4px }
+        .step { margin-left: 20px; margin-bottom: 15px }
+    </style>
+</head>
+<body>
+    <h1>工作管理系统开发指南 <span class="badge">高效版</span></h1>
+    
+    <h2>🎯 项目架构规划</h2>
+    <div class="step">
+        <strong>1. 文件结构创建</strong>
+        <pre># 创建基础文件结构
+Pages/
+├── Dashboard.aspx
+├── TaskManager.aspx
+CodeBehind/
+├── TaskHandler.cs
+Scripts/
+├── chart.js
+├── app.js
+Styles/
+├── theme.css</pre>
+    </div>
+
+    <div class="step">
+        <strong>2. ASPX页面生成提示</strong>
+        <pre>[ASPX:Grid布局]
+"创建响应式仪表盘页面，包含3列卡片布局，使用Bootstrap网格系统"
+<div class="row">
+  <div class="col-md-4"><div class="card">任务统计</div></div>
+  <div class="col-md-4"><div class="card">进度图表</div></div>
+  <div class="col-md-4"><div class="card">时间轴</div></div>
+</div></pre>
+    </div>
+
+    <h2>🔧 核心功能实现</h2>
+    <div class="step">
+        <strong>3. 数据绑定提示</strong>
+        <pre>[C# Data Binding]
+"创建任务数据模型，实现LINQ to SQL查询并绑定到GridView"
+public class TaskModel {
+    public int TaskID { get; set; }
+    public string Title { get; set; }
+    public DateTime DueDate { get; set; }
+    public string Status { get; set; }
+}
+
+protected void Page_Load(object sender, EventArgs e) {
+    if (!IsPostBack) {
+        var tasks = db.Tasks.Where(t => t.UserID == CurrentUser.ID);
+        taskGrid.DataSource = tasks;
+        taskGrid.DataBind();
+    }
+}</pre>
+    </div>
+
+    <div class="step">
+        <strong>4. Highcharts集成提示</strong>
+        <pre>[JavaScript Chart]
+"创建柱状图展示任务完成情况，使用AJAX获取JSON数据"
+function loadCompletionChart() {
+    $.ajax({
+        url: '/api/tasks/completion',
+        success: function(data) {
+            $('#chart').highcharts({
+                chart: { type: 'column' },
+                series: [{
+                    name: '完成情况',
+                    data: data.map(d => d.completed)
+                }]
+            });
+        }
+    });
+}</pre>
+    </div>
+
+    <h2>🎨 样式与交互优化</h2>
+    <div class="step">
+        <strong>5. CSS动画提示</strong>
+        <pre>[CSS Animation]
+"实现卡片悬停动画效果"
+.card {
+    transition: transform 0.3s ease;
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+}</pre>
+    </div>
+
+    <div class="step">
+        <strong>6. jQuery交互提示</strong>
+        <pre>[jQuery Drag&Drop]
+"实现任务卡片拖拽排序功能"
+$('.task-card').draggable({
+    revert: true,
+    start: function() { $(this).css('z-index', 1000); }
+});
+
+$('.task-list').droppable({
+    accept: '.task-card',
+    drop: function(event, ui) {
+        var targetList = $(this);
+        $.post('/api/tasks/move', {
+            taskId: ui.draggable.data('id'),
+            newList: targetList.data('list')
+        });
+    }
+});</pre>
+    </div>
+
+    <h2>🚀 高效开发技巧</h2>
+    <ul>
+        <li><strong>智能注释：</strong>使用<code>//@生成表格组件</code>触发Copilot组件生成</li>
+        <li><strong>代码片段：</strong>创建自定义代码片段<code>gridview</code>快速插入常用模板</li>
+        <li><strong>渐进开发：</strong>先生成HTML结构，再逐步添加交互功能</li>
+        <li><strong>错误预防：</strong>在提示中明确指定<code>需包含验证逻辑</code>确保安全</li>
+    </ul>
+
+    <h2>📌 最佳实践</h2>
+    <pre>// 高效开发流程：
+1. 使用HTML5 Boilerplate快速搭建页面结构
+2. 通过BEM命名规范CSS类
+3. 使用IIFE封装jQuery代码
+4. 在ASPX中使用<%$ Resources:... %>实现本地化
+5. 对数据访问层使用Partial Class分离逻辑</pre>
+
+    <h2>🗂 项目模板下载</h2>
+    <p><a href="https://github.com/yourusername/work-management-template " target="_blank">获取基础项目模板</a>（包含预配置的VS Code设置）</p>
+</body>
+</html>

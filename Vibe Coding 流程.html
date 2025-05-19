@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding 流程與提示範例</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .prompt {
+            font-family: monospace;
+            background-color: #eee;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .explanation {
+            font-style: italic;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vibe Coding 流程與提示範例</h1>
+
+    <h2>Vibe Coding 流程與提示表格 (更詳細範例)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>步驟</th>
+                <th>描述</th>
+                <th>重點內容</th>
+                <th>範例提示</th>
+                <th>說明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1. 初始化：開始一個概略的想法或任務</td>
+                <td>使用者心中有一個高階目標，例如：「建立一個簡單的 Web 應用程式來顯示項目列表。」</td>
+                <td>
+                    <ul>
+                        <li>以自然語言表達您的想法。</li>
+                        <li>不必過於詳細，重點在於傳達核心概念。</li>
+                        <li>可以提及目標技術棧 (例如：使用 React、Python Flask)。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">我想使用 Python Flask 建立一個簡單的 API，可以回傳 JSON 格式的產品列表。</p>
+                    <p class="prompt">我想要一個使用 React 建立的簡單待辦事項應用程式，包含新增、刪除和標記完成的功能。</p>
+                </td>
+                <td class="explanation">這個階段的目標是讓 Copilot 理解您想要建立什麼。</td>
+            </tr>
+            <tr>
+                <td>2. 提示產生程式碼：描述期望的功能</td>
+                <td>將任務分解為更小、更具體的指示。</td>
+                <td>
+                    <ul>
+                        <li>逐步引導 Copilot 實作每個功能。</li>
+                        <li>使用清晰且明確的語言。</li>
+                        <li>可以提供輸入/輸出範例或所需的資料結構。</li>
+                        <li>指定程式語言、函式庫或框架。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">建立一個 Flask 路由 <code>/products</code>，當收到 GET 請求時，回傳一個包含產品名稱和價格的 JSON 列表。</p>
+                    <p class="prompt">建立一個 React 功能組件，包含一個輸入框、一個按鈕和一個顯示待辦事項的列表。使用 useState hook 管理待辦事項。</p>
+                    <p class="prompt">寫一個 JavaScript 函式，接受一個日期字串 (YYYY-MM-DD) 作為輸入，並回傳該日期是星期幾。</p>
+                </td>
+                <td class="explanation">這個階段是逐步建立應用程式的關鍵。越詳細的指示，Copilot 就能產生越符合您需求的程式碼。</td>
+            </tr>
+            <tr>
+                <td>3. 審查與接受：檢查產生的程式碼</td>
+                <td>仔細檢查 Copilot 產生的程式碼。檢查正確性、潛在的錯誤和安全漏洞。在接受之前先理解產生的程式碼。</td>
+                <td>
+                    <ul>
+                        <li>仔細閱讀每一行程式碼。</li>
+                        <li>檢查是否有語法錯誤、邏輯錯誤或潛在的安全風險。</li>
+                        <li>使用 Copilot 的 <code>/explain</code> 功能來理解不熟悉的部分。</li>
+                        <li>考慮單元測試 (可以使用 Copilot 的 <code>/tests</code> 功能協助產生)。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">@workspace /explain 這個 Flask 路由的目的是什麼？</p>
+                    <p class="prompt">@workspace /explain 這個 React 組件中的 <code>useState</code> hook 是如何運作的？</p>
+                    <p class="prompt">為這個 JavaScript 的星期幾函式產生一些單元測試。</p>
+                </td>
+                <td class="explanation">即使 AI 產生了程式碼，人工審查仍然至關重要，以確保品質和安全性。</td>
+            </tr>
+            <tr>
+                <td>4. 完善與迭代：提供回饋和新的提示</td>
+                <td>如果產生的程式碼不完全正確或需要改進，提供回饋或新的提示。</td>
+                <td>
+                    <ul>
+                        <li>明確指出需要修改的部分。</li>
+                        <li>提供更詳細的指示或範例。</li>
+                        <li>可以使用「做得更好」、「更簡潔」、「更有效率」等詞語引導 Copilot。</li>
+                        <li>可以要求 Copilot 遵循特定的編碼風格。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">這個 Flask API 回傳的 JSON 格式應該包含產品 ID。</p>
+                    <p class="prompt">React 待辦事項應用程式的列表應該在新增後自動捲動到最底部。</p>
+                    <p class="prompt">這個 JavaScript 的星期幾函式可以寫得更簡潔嗎？</p>
+                    <p class="prompt">請使用 ES6 的語法重寫這個 JavaScript 函式。</p>
+                </td>
+                <td class="explanation">迭代是 Vibe Coding 的核心。透過不斷地與 Copilot 溝通，逐步完善程式碼。</td>
+            </tr>
+            <tr>
+                <td>5. 測試與除錯：識別和解決問題</td>
+                <td>測試應用程式或特定的程式碼片段，以識別可能仍然存在的任何錯誤或問題。</td>
+                <td>
+                    <ul>
+                        <li>執行程式碼並測試所有功能。</li>
+                        <li>檢查是否有錯誤訊息或非預期的行為。</li>
+                        <li>使用瀏覽器的開發人員工具或伺服器日誌來追蹤問題。</li>
+                        <li>使用 Copilot 的 <code>/fix</code> 功能尋求修正建議。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">@workspace /fix 這個 Flask API 在處理 POST 請求時出現錯誤。</p>
+                    <p class="prompt">React 待辦事項應用程式在刪除最後一個項目後會出現錯誤。</p>
+                    <p class="prompt">這個 JavaScript 的星期幾函式在處理無效日期時會拋出例外。</p>
+                    <p class="prompt">錯誤訊息：<code>TypeError: Cannot read property 'value' of null</code></p>
+                </td>
+                <td class="explanation">測試是確保程式碼正常運作的關鍵步驟。Copilot 可以協助除錯，但您仍然需要理解錯誤訊息並引導 AI 找到正確的解決方案。</td>
+            </tr>
+            <tr>
+                <td>6. 優化與重構 (可選)</td>
+                <td>在基本功能完成後，可以要求 Copilot 優化程式碼的效能、可讀性或可維護性。</td>
+                <td>
+                    <ul>
+                        <li>要求 Copilot 找出效能瓶頸並提出改進建議。</li>
+                        <li>要求 Copilot 重構程式碼以提高可讀性。</li>
+                        <li>要求 Copilot 遵循特定的設計模式。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">如何優化這個 Flask API 的資料查詢效能？</p>
+                    <p class="prompt">重構這個 React 組件，將 UI 邏輯和資料處理邏輯分離。</p>
+                    <p class="prompt">這個 JavaScript 函式可以使用記憶化來提高效能嗎？</p>
+                </td>
+                <td class="explanation">優化和重構可以使您的程式碼更有效率、更易於理解和維護。</td>
+            </tr>
+            <tr>
+                <td>7. 文件撰寫 (可選)</td>
+                <td>要求 Copilot 為您的程式碼產生文件。</td>
+                <td>
+                    <ul>
+                        <li>可以使用 Copilot 的 <code>/doc</code> 功能。</li>
+                        <li>可以指定文件的格式 (例如：Markdown、JSDoc)。</li>
+                        <li>可以要求 Copilot 為特定的函式、類別或模組撰寫文件。</li>
+                    </ul>
+                </td>
+                <td>
+                    <p class="prompt">@workspace /doc 為這個 Flask API 產生 Markdown 格式的文件。</p>
+                    <p class="prompt">為這個 React 組件中的所有函式產生 JSDoc 註解。</p>
+                    <p class="prompt">為這個 JavaScript 函式撰寫使用說明和範例。</p>
+                </td>
+                <td class="explanation">良好的文件對於程式碼的理解和維護至關重要。Copilot 可以協助您快速產生基本的文件。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>這個更詳細的表格提供了 Vibe Coding 流程中每個步驟的重點內容、更豐富的範例提示和說明，希望能幫助您更好地理解和應用這種快速開發方法。</p>
+</body>
+</html>

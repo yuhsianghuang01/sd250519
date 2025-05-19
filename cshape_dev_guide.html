@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>C#/.NET 开发者指南</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db
+        }
+
+        .badge {
+            background: #3498db;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px
+        }
+
+        code {
+            background: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 4px
+        }
+    </style>
+</head>
+
+<body>
+    <h1>C#/.NET 开发者指南 <span class="badge">2025版</span></h1>
+
+    <h2>🚀 核心特性速查</h2>
+    <ul>
+        <li><strong>字符串格式化：</strong>使用<code>IFormattable</code>接口实现自定义格式化[[5]]</li>
+        <li><strong>匿名类型：</strong>var user = new { Name = "John", Age = 30 };</li>
+        <li><strong>扩展方法：</strong>public static string ToTitleCase(this string s) { ... }</li>
+    </ul>
+
+    <h2>🔧 开发技巧宝典</h2>
+    <div style="margin-left: 20px">
+        <p><strong>LINQ优化：</strong>使用<code>AsParallel()</code>实现并行查询</p>
+        <pre>var result = data.AsParallel()
+            .Where(x => x.IsActive)
+            .OrderByDescending(x => x.Score);</pre>
+
+        <p><strong>错误处理：</strong>结合<code>try/with</code>和全局异常过滤器</p>
+        <pre>try {
+    // 业务代码
+} catch (Exception ex) when (ex is not CriticalException) {
+    // 日志记录
+}</pre>
+    </div>
+
+    <h2>🛠️ 工具推荐</h2>
+    <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%">
+        <tr>
+            <th>工具</th>
+            <th>功能</th>
+            <th>推荐指数</th>
+        </tr>
+        <tr>
+            <td>VS Code C# Dev Kit</td>
+            <td>智能提示/重构/调试</td>
+            <td>⭐⭐⭐⭐⭐</td>
+        </tr>
+        <tr>
+            <td>ReSharper</td>
+            <td>代码分析/架构优化</td>
+            <td>⭐⭐⭐⭐☆</td>
+        </tr>
+        <tr>
+            <td>NuGet Package Explorer</td>
+            <td>包管理/发布</td>
+            <td>⭐⭐⭐⭐</td>
+        </tr>
+    </table>
+
+    <h2>📚 最佳实践</h2>
+    <ul>
+        <li>代码规范：遵循微软官方编码约定[[7]]</li>
+        <li>性能优化：优先使用<code>StringBuilder</code>拼接字符串</li>
+        <li>文档生成：使用XML注释配合<code>DocFX</code>生成API文档[[7]]</li>
+    </ul>
+
+    <h2>🧩 版本特性对比</h2>
+    <pre>.NET Core 3.1 → .NET 5 → .NET 6 → .NET 8
+    ↓                       ↓
+LTS支持（2022）        单文件发布改进
+                        AOT编译支持</pre>
+
+    <h2>📌 参考资源</h2>
+    <ul>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/ " target="_blank">官方文档</a></li>
+        <li><a href="https://github.com/dotnet/roslyn " target="_blank">Roslyn编译器源码</a></li>
+        <li><a href="https://devblogs.microsoft.com/dotnet/ " target="_blank">.NET 官方博客</a></li>
+    </ul>
+
+    <hr>
+
+    <h1>提升 VS Code Copilot 在软件开发中的效率：高级技巧与实践</h1>
+
+    <h2>1. 引言</h2>
+    <p>在现代软件开发领域，人工智能正扮演着越来越重要的角色。Visual Studio Code (VS Code) 作为一款流行的代码编辑器，通过集成 GitHub Copilot 这一 AI
+        结对编程工具，为开发者带来了前所未有的效率提升。Copilot 利用人工智能技术，能够在编码过程中提供智能的代码建议、自然语言聊天交互，并协助完成代码生成、解释和重构等多种任务 [1]。Copilot
+        提供了多种工作模式，包括“提问 (Ask)”、“编辑 (Edit)”和更具自主性的“代理 (Agent)”模式，以适应不同的开发场景。</p>
+    <p>本报告旨在深入探讨如何通过掌握高级技巧、运用顶级提示 (prompt)，以及探索新兴的“氛围编码 (vibe coding)”策略，来最大限度地发挥 VS Code Copilot 在 C#、JavaScript、jQuery
+        和 Oracle 开发中的潜力。此外，报告还将阐述如何利用 Copilot 将分析结果输出为 HTML 文档，从而实现开发工作流程的全面优化。</p>
+    <p>Copilot 功能的演进表明，AI 在软件开发中的作用正从简单的代码建议转向更具自主性的辅助 [2, 3, 4]。这意味着，提示工程需要相应地发展，以充分利用这些更高级的功能，从简单的代码请求转向编排 AI
+        执行更复杂的任务。用户对“氛围编码”提示的需求，反映了 AI 在处理更多直接编码工作方面的新兴趋势 [5, 6, 7]。这不仅需要涵盖传统的提示方法，还需要探讨如何在更少干预、更注重目标实现的方式下有效地引导
+        AI。最后，将报告输出为 HTML 的具体需求，突显了 Copilot 代码生成能力在典型开发任务之外的实际应用。这表明，报告还应讨论如何提示 Copilot 生成和格式化文档。</p>
+
+    <h2>2. 最大化 VS Code Copilot 效率的通用策略</h2>
+    <p>为了充分利用 VS Code Copilot，理解其不同的模式和功能，并学会如何为您的请求提供恰当的上下文至关重要。</p>
+
+    <h3>理解 Copilot 的不同模式和功能</h3>
+    <ul>
+        <li><b>聊天视图 (Chat View):</b> 通过快捷键 <code>Ctrl+Alt+I</code> 打开聊天视图，您可以与 Copilot 进行自然语言对话，进行头脑风暴、询问有关代码的问题或获取代码解释
+            [8, 9]。</li>
+        <li><b>内联聊天 (Inline Chat):</b> 使用快捷键 <code>Ctrl+I</code> 直接在编辑器内启动内联聊天，无需离开当前上下文即可快速提问或请求代码修改 [8, 9]。</li>
+        <li><b>快速聊天 (Quick Chat):</b> 通过快捷键 <code>Ctrl+Shift+Alt+L</code> 访问快速聊天，用于向 Copilot 提出简短、集中的问题 [8, 9]。</li>
+        <li><b>Copilot 编辑 (Copilot Edits):</b> 使用快捷键 <code>Ctrl+Shift+Alt+I</code> 启动 Copilot
+            编辑会话，可以在工作区中的多个文件之间进行代码更改，从而快速迭代 AI 生成的代码修改 [8, 9]。</li>
+        <li><b>代理模式 (Agent Mode):</b> 启用代理模式以实现更自主、多步骤的任务完成。在这种模式下，Copilot 可以分析您的代码库、建议文件编辑、运行终端命令，甚至根据错误进行自我修正 [2, 3,
+            4]。</li>
+    </ul>
+
+    <h3>上下文的重要性</h3>
+    <p>提供相关的上下文对于 Copilot 生成准确且有用的响应至关重要 [10, 11, 12, 13, 14]。</p>
+    <ul>
+        <li><b>保持相关文件处于打开状态:</b> 确保与您当前任务相关的文件在编辑器中处于打开状态。Copilot 会分析这些文件以理解项目的上下文 [11, 13, 14]。</li>
+        <li><b>使用顶层注释:</b> 在文件或特定代码段的开头使用注释简要描述其目的或目标。这有助于 Copilot 理解整体上下文 [11, 13, 14]。</li>
+        <li><b>显式设置包含和引用:</b> 手动添加必要的 <code>using</code> 指令或导入语句，以清楚地表明您打算使用的库和模块 [11, 13, 14]。</li>
+        <li><b>使用有意义的名称:</b> 为您的变量和函数采用描述性的名称。这有助于 Copilot 推断代码的意图和目的 [11, 13, 14]。</li>
+        <li><b>提供特定的函数注释:</b> 使用详细且范围明确的函数注释来解释函数的作用、参数和返回值 [11, 13, 14]。</li>
+        <li><b>突出显示相关代码:</b> 在使用聊天时，选择您希望 Copilot 考虑的特定代码块。这可以集中其注意力并产生更相关的响应 [8, 9, 10]。</li>
+        <li><b>附加文件或文件夹:</b> 在聊天视图中，使用“添加上下文…”选项或键入 <code>#</code> 后跟文件名或文件夹名称，以将特定文件或整个文件夹附加为提示的上下文 [8, 9, 11]。</li>
+        <li><b>利用聊天变量:</b> 利用聊天变量，例如 <code>#codebase</code> 引用整个工作区，<code>#file</code> 指定文件，或 <code>#selection</code>
+            包含当前选定的文本作为上下文 [8, 9, 11]。</li>
+    </ul>
+
+    <h3>迭代提示和优化建议</h3>
+    <p>不要期望 Copilot 在第一次尝试时就生成完美的解决方案。准备好迭代您的提示，提出后续问题，并根据 Copilot 的响应优化您的请求 [10, 11, 12, 14, 15, 16]。</p>
+
+    <h3>利用自定义指令和提示文件</h3>
+    <ul>
+        <li><b>自定义指令:</b> 使用工作区根目录中的 <code>.github/copilot-instructions.md</code> 文件提供项目特定的指南和编码风格偏好。Copilot
+            将使用这些指令来调整其建议 [17, 18]。</li>
+        <li><b>提示文件:</b> 通过在 <code>.github/prompts</code> 文件夹中使用 <code>.prompt.md</code> 文件创建可重用的提示。这些文件允许您以 Markdown
+            格式编写完整的提示，您可以轻松地在聊天中引用和重用它们 [10, 17]。</li>
+    </ul>
+
+    <p>Copilot 的有效性与所提供上下文的质量和相关性直接相关 [13]。这强调了不仅要提出问题，还要积极为 Copilot 理解用户的意图和代码库的具体细节做好准备的重要性。驱动 Copilot
+        的大型语言模型通过预测输入中的下一个标记来工作。提供的相关信息（上下文）越多，在代码建议或答案方面，预测就越好。不同聊天模式（提问、编辑、代理）的可用性标志着 AI 辅助功能正朝着更专业化的方向发展
+        [1]。用户需要了解何时使用每种模式以最大限度地提高效率——例如，对复杂任务使用代理模式，对快速编辑使用内联聊天。将功能划分为不同的模式，使 Copilot
+        能够集中其资源并为特定类型的请求提供更量身定制的帮助，从而提高整体用户体验。自定义指令和提示文件代表了一种强大方式，可以个性化 Copilot 并强制执行团队范围内的编码标准 [17,
+        18]。这突显了组织可以根据其特定需求调整 Copilot 的行为并确保项目之间一致性的潜力。通过允许用户定义其编码偏好并保存可重用的提示，Copilot
+        成为开发工作流程中更集成和适应性更强的部分，从而提高了效率和代码质量。</p>
+
+    <h2>3. 代码生成的高级提示工程技巧</h2>
+    <p>掌握提示工程是充分发挥 VS Code Copilot 代码生成潜力的关键。</p>
+    <ul>
+        <li><b>清晰且具体地构建提示:</b> 准确说明您希望 Copilot 生成的内容，包括编程语言、具体要求和任何约束条件 [10, 11, 12, 14, 15]。</li>
+        <li><b>使用示例引导 Copilot:</b> 提供输入-输出示例或展示所需的代码模式，以帮助 Copilot 更好地理解您的需求 [10, 12, 15, 19]。</li>
+        <li><b>将复杂任务分解为更小的、可管理的提示:</b> 不要一次要求生成大量代码，而是将任务分解为逻辑步骤，并分别提示 Copilot完成每个步骤 [10, 11, 12, 14, 15]。</li>
+        <li><b>利用聊天参与者、斜杠命令和聊天变量:</b>
+            <ul>
+                <li><code>@workspace</code>: 为 Copilot 提供来自整个项目的上下文 [8, 13, 20,
+                    21]。例如：<code>@workspace 这个项目中是如何实现身份验证的？</code></li>
+                <li><code>@vscode</code>: 询问有关 VS Code 功能、设置和 API 的问题 [8, 9,
+                    20]。例如：<code>@vscode 如何更改 VS Code 中的主题？</code></li>
+                <li><code>@terminal</code>: 与集成终端 shell 交互 [8, 9]。例如：<code>@terminal 列出当前目录中的所有文件的命令是什么？</code></li>
+                <li><code>/explain</code>: 要求 Copilot 解释选定的代码块或编程概念 [8, 9]。例如：选择一个代码块并键入
+                    <code>/explain 这个函数是做什么的？</code>
+                </li>
+                <li><code>/fix</code>: 请求 Copilot 为选定的代码中的问题提出修复建议 [8, 9]。例如：选择包含错误的代码并键入 <code>/fix 为此错误提出修复建议。</code>
+                </li>
+                <li><code>/tests</code>: 为选定的代码生成单元测试 [8, 9]。例如：选择一个函数并键入 <code>/tests 为此函数生成单元测试。</code></li>
+                <li><code>#codebase</code>、<code>#file</code>、<code>#selection</code>: 使用这些聊天变量为您的提示提供特定的上下文 [8, 9,
+                    11]。例如：<code>编写一个函数来计算 #file:utils.js 中所有数字的总和。</code></li>
+            </ul>
+        </li>
+        <li><b>实验和持续优化:</b> 提示工程是一个迭代过程。不要害怕尝试不同的措辞和方法，直到获得所需的结果 [10, 12, 14, 15, 19]。</li>
+    </ul>
+
+    <p>提示中通用和特定指令的结合可以产生最佳结果 [10, 15]。首先设定一个广泛的目标，然后逐步添加具体的要求和约束，可以使 Copilot
+        缩小可能性范围并生成更有针对性的代码。大型语言模型在清楚理解所需结果时表现最佳。通过首先设定一个总体方向，然后添加细节，用户可以引导 AI 找到精确的解决方案。提供示例可以显著提高 Copilot
+        理解复杂需求的能力，尤其是在涉及数据转换或特定逻辑的任务中 [10, 15, 19]。这表明，在请求非标准或复杂的代码时，展示预期的输入和输出是一种非常有效的技术。示例充当 AI
+        的一种“少样本学习”，使其能够从提供的实例中推断出潜在的模式或规则，并将其应用于新的情况。各种聊天参与者和斜杠命令为常见操作提供了快捷方式，并可以访问特定的上下文信息 [8, 9,
+        11]。掌握这些工具的开发人员可以更高效地与 Copilot 交互，并为他们工作流程的不同方面获取有针对性的帮助。这些功能通过提供预定义的提示和访问 VS Code 环境中相关数据源的方式，简化了与 Copilot
+        的交互，从而节省了用户从头开始编写复杂提示的时间和精力。</p>
+
+    <h2>4. 特定于语言的提示和使用技巧</h2>
+    <p>根据您正在使用的特定编程语言调整您的提示和使用策略，可以显著提高 Copilot 的效率。</p>
+
+    <h3>C# 开发</h3>
+    <ul>
+        <li><b>有效提示:</b> 使用诸如“生成一个名为 <code>UserService</code> 的 C# 类，其中包含一个名为 <code>GetUserById</code> 的方法，该方法接受一个整数
+            <code>id</code> 并返回一个 <code>User</code> 对象”之类的提示 [1]。
+        </li>
+        <li><b>LINQ、测试、重构:</b> 提示 LINQ 查询（“编写一个 LINQ 查询以获取所有 <code>Age</code> 大于 25 的用户”）、单元测试（“为
+            <code>OrderService</code> 类中的 <code>CalculateDiscount</code> 方法生成 xUnit 测试”）和重构（“重构
+            <code>ProcessOrder</code> 方法，通过将地址验证逻辑提取到单独的函数中来提高可读性”）[22, 23, 24, 25, 26, 27]。
+        </li>
+        <li><b>上下文:</b> 利用注释（例如 <code>// 创建一个使用 Entity Framework Core 连接到数据库的方法。</code>）并确保打开相关的 C# 文件以提供上下文 [11, 13,
+            14]。</li>
+    </ul>
+
+    <h3>JavaScript 开发</h3>
+    <ul>
+        <li><b>前端/后端:</b> 使用诸如“生成一个 React 组件…”或“编写一个 Node.js Express 路由…”之类的提示 [1]。</li>
+        <li><b>框架/库:</b> 提示使用特定的库（例如“使用 React Hooks…”）或框架（例如“使用 <code>axios</code> 编写一个函数…”）[19, 28, 29, 30, 31, 32]。
+        </li>
+        <li><b>事件处理、DOM、异步:</b> 生成事件处理程序（例如“使用 jQuery 编写一个 JavaScript 函数来隐藏一个元素…”）、DOM 操作以及使用 <code>async/await</code>
+            的异步代码 [16, 19, 23, 29, 31, 33]。</li>
+    </ul>
+
+    <h3>jQuery 开发</h3>
+    <ul>
+        <li><b>DOM、事件、AJAX:</b> 提示进行 DOM 操作（例如“使用 jQuery 更改所有类名为 <code>container</code> 的 <code>div</code>
+            元素的背景颜色…”）、事件处理（例如“当用户悬停在列表项上时，使用 jQuery 添加一个名为 <code>highlight</code> 的类”）和 AJAX 请求（例如“编写一个 jQuery AJAX
+            POST 请求到 <code>/submit-form</code>，并包含来自 ID 为 <code>myForm</code> 的表单的数据”）[16, 33, 34]。</li>
+        <li><b>选择器/插件:</b> 在提示中有效地使用 jQuery 选择器（例如“使用 jQuery，选择所有类型为 <code>text</code> 的 <code>input</code>
+            元素…”），并在打算使用特定插件时提及它们（例如“使用 jQuery UI 自动完成插件，在用户在 ID 为 <code>city</code> 的输入字段中键入时建议城市名称”）[16]。</li>
+    </ul>
+
+    <h3>Oracle 开发</h3>
+    <ul>
+        <li><b>SQL 查询:</b> 为 Oracle 生成 SQL 查询（例如“编写一个 Oracle SQL 查询以选择 <code>Employees</code> 表中
+            <code>DepartmentId</code> 为 10 的所有列”）或用于特定任务（例如查找每个部门的平均工资）[35, 36, 37, 38, 39]。
+        </li>
+        <li><b>PL/SQL:</b> 提示编写 PL/SQL 存储过程（例如“创建一个名为 <code>UpdateEmployeeSalary</code> 的 Oracle PL/SQL 存储过程…”）和函数 [40,
+            41]。</li>
+        <li><b>限制与策略:</b> 通过注释或打开的 DDL 脚本提供模式上下文。考虑使用诸如 Oracle SQL Developer for VS Code 之类的扩展 [35, 38, 42, 43, 44, 45]。
+        </li>
+    </ul>
+
+    <p>特定于语言的提示需要理解每种语言及其相关库/框架的细微差别和常见模式 [46, 47, 48, 49]。C# 的有效提示与 JavaScript 或 SQL
+        的有效提示不同。这表明开发人员需要根据他们正在使用的特定技术定制他们的提示，以获得最相关的建议。每种编程语言都有其自身的语法、约定和最佳实践。Copilot
+        的建议受到周围代码和提示的影响。因此，与目标语言的特定特征相符的提示将产生更好的结果。对于使用 Oracle 进行数据库开发，提供模式信息对于准确生成 SQL 和 PL/SQL 至关重要 [35, 38,
+        42]。与专用的数据库 IDE 不同，Copilot 本身并不了解数据库结构。这需要用户在提示中明确提供此上下文。大型语言模型依赖于它们的训练数据和提示中提供的上下文。由于 Copilot 的训练数据可能不包含用户
+        Oracle 数据库的特定模式，因此用户需要提供此信息，以便 Copilot 生成有意义的数据库相关代码。用户对其项目中使用的特定库和框架（例如，React、Express、jQuery、Entity Framework
+        Core）的熟悉程度将显著影响他们有效提示 Copilot 的能力 [16, 19, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+        39]。了解这些工具的语法和常用模式将使他们能够编写更精确有效的提示。当用户理解他们正在使用的工具时，他们可以更好地向 Copilot 表达他们的需求，其方式与这些工具的功能和约定相符，从而获得更准确和有用的代码建议。
+    </p>
+
+    <h2>5. 探索 VS Code Copilot 的“氛围编码”</h2>
+    <p>“氛围编码”是一种新兴的软件开发方法，它严重依赖于 AI，您可以用自然语言描述您想要的软件，然后由 AI 处理代码生成 [5, 6, 7]。这会将重点从手动编码转移到指导和优化 AI 生成的代码。</p>
+
+    <h3>利用 Copilot 的代理模式</h3>
+    <p>Copilot 的代理模式 [2, 3, 4] 是“氛围编码”的关键特性。它允许 Copilot 根据简单的提示自主执行多步骤的编码任务。代理模式可以分析您的代码库、建议文件编辑、运行终端命令，甚至根据错误进行自我修正。
+    </p>
+
+    <h3>采用“氛围编码”的优势和局限性</h3>
+    <ul>
+        <li><b>优势:</b> 更快的开发周期、更轻松的原型设计和实验、为没有深入编码知识的个人提高可访问性以及促进创新的潜力 [7, 50, 51, 52, 53]。</li>
+        <li><b>局限性:</b> 如果不仔细审查，可能会生成不可靠或不安全的代码、调试复杂的 AI 生成代码方面的挑战、对 AI 理解用户意图的高度依赖以及确保质量和正确性需要人为监督和优化 [7, 50, 51, 52,
+            53]。</li>
+    </ul>
+
+    <h3>“氛围编码”的实际示例</h3>
+    <p>您可以使用“氛围编码”执行各种任务，例如 [5, 51, 54]：</p>
+    <ul>
+        <li>创建一个具有特定布局和功能的基本 Web 应用程序。</li>
+        <li>生成一个脚本来分析数据集并生成摘要。</li>
+        <li>构建一个具有明确规则和交互的基本游戏。</li>
+        <li>通过描述所需的操作序列来自动化重复性任务。</li>
+    </ul>
+
+    <p>“氛围编码”代表了软件开发领域的重大范式转变，它有可能使代码创建民主化，但也带来了与代码质量、安全性和理解相关的新挑战 [6, 7, 52, 53, 55, 56,
+        57]。这表明，虽然它为快速开发提供了令人兴奋的可能性，但开发人员需要意识到其潜在的缺陷，并对 AI
+        生成的代码保持批判性的态度。“氛围编码”降低了软件开发的门槛，允许技术专业知识较少的人创建应用程序。然而，这也意味着生成的代码可能并不总是遵循最佳实践或安全标准，因此需要经验丰富的开发人员进行仔细审查和测试。Copilot
+        的代理模式通过允许更自主地执行开发任务，成为“氛围编码”的关键推动因素 [2, 3, 4]。这预示着未来开发人员可能会花更少的时间直接编写代码，而更多的时间定义高级目标并指导 AI
+        代理来实现这些目标。代理模式超越了简单的代码建议，允许 AI
+        在开发过程中发挥更积极的作用，执行多个步骤以满足用户的请求。这可以显著加快某些类型任务的开发工作流程。“氛围编码”的有效性在很大程度上取决于提示的质量以及用户提供清晰简洁指令的能力 [5, 6, 7,
+        51]。这强调了即使在更自主的编码范式中，提示工程仍然至关重要。虽然“氛围编码”旨在实现更自然的语言交互，但 AI
+        仍然需要清晰明确的指导才能产生所需的结果。因此，编写有效提示的能力仍然是使用这种方法的开发人员的一项关键技能。</p>
+
+    <h2>6. 使用 VS Code Copilot 以 HTML 格式生成报告</h2>
+    <p>VS Code Copilot 还可以协助生成结构化文档，例如本报告的 HTML 格式。</p>
+
+    <h3>HTML 生成的提示策略</h3>
+    <p>首先明确指示 Copilot 生成 HTML 文档。然后，逐节提供内容，指导 Copilot 如何使用特定的 HTML 标记来构建文档。</p>
+    <ul>
+        <li><b>结构:</b> 以诸如“生成一个标题为‘掌握 VS Code Copilot’的 HTML 文档…”之类的提示开始。</li>
+        <li><b>标题:</b> 对于标题，使用诸如“为‘通用策略…’创建一个 <code>&lt;h2&gt;</code> 标题”之类的提示。</li>
+        <li><b>列表:</b> 对于项目符号列表或编号列表，使用：“为以下项目生成一个无序列表 (<code>&lt;ul&gt;</code> 和 <code>&lt;li&gt;</code>)…</li>
+        <li><b>段落:</b> 对于常规文本，只需提供内容，Copilot 可能会将其格式化在 <code>&lt;p&gt;</code> 标记中。</li>
+        <li><b>代码块:</b> 对于代码示例，指示 Copilot 使用 <code>&lt;pre&gt;</code> 和 <code>&lt;code&gt;</code> 标记来保留格式。例如：“为以下
+            JavaScript 代码生成一个使用 <code>&lt;pre&gt;&lt;code&gt;</code> 标记的代码块…”</li>
+    </ul>
+
+    <h3>确保格式良好且可读的 HTML 的技巧</h3>
+    <ul>
+        <li><b>基本样式:</b> 您可以要求 Copilot 包含基本 CSS 以提高可读性。例如：“添加一些基本 CSS 来设置字体样式和边距。”</li>
+        <li><b>语义化 HTML:</b> 鼓励 Copilot 使用语义化的 HTML5 标记，例如
+            <code>&lt;article&gt;</code>、<code>&lt;section&gt;</code>、<code>&lt;nav&gt;</code> 等，以获得更好的结构和 SEO。
+        </li>
+    </ul>
+
+    <p>Copilot 可以有效地用作生成 HTML 等结构化格式文档的工具 [33]。这突显了它在编码任务之外的通用性，暗示了在技术写作和文档编制方面的潜在应用。由于 HTML 是一种具有明确定义的标记的标记语言，因此可以指示
+        Copilot 在此结构中生成内容，从而展示了其处理不同类型基于文本的输出的能力。清晰且具体的提示对于引导 Copilot 生成格式良好的 HTML 至关重要
+        [33]。就像代码生成一样，提供有关所需结构和元素的详细说明对于获得所需输出至关重要。用户关于 HTML 标记和结构的指令越精确，Copilot 就越能生成组织良好且可读的文档。虽然 Copilot 可以生成基本的
+        CSS，但复杂的样式可能仍然需要手动调整或更详细的提示 [33, 46]。这表明，对于复杂的 HTML 报告，用户可能需要在初始生成后优化样式。Copilot 的主要功能是代码生成，虽然它可以协助进行基本样式设置，但高级
+        CSS 可能需要更具体的知识或手动干预才能实现所需的视觉呈现。</p>
+
+    <h2>7. 结论</h2>
+    <p>掌握 VS Code Copilot
+        需要理解其各种功能，采用高级提示工程技巧，并根据您正在使用的特定编程语言调整您的方法。“氛围编码”的出现以及诸如代理模式之类的强大功能，为提高开发效率提供了令人兴奋的新可能性。通过不断学习和试验 Copilot
+        的功能和提示技巧，您可以显著简化您的工作流程并在快速发展的 AI 辅助软件开发领域保持领先地位。</p>
+
+    <h2>关键资源</h2>
+
+    <h3>表 1：VS Code Copilot 聊天参与者及其用途</h3>
+    <table>
+        <tr>
+            <th>聊天参与者名称</th>
+            <th>描述</th>
+            <th>示例用例/提示</th>
+        </tr>
+        <tr>
+            <td><code>@workspace</code></td>
+            <td>了解您工作区中的代码。</td>
+            <td><code>@workspace 这个项目中是如何安排通知的？</code></td>
+        </tr>
+        <tr>
+            <td><code>@vscode</code></td>
+            <td>了解 VS Code 的功能、设置和 API。</td>
+            <td><code>@vscode 如何禁用小地图？</code></td>
+        </tr>
+        <tr>
+            <td><code>@terminal</code></td>
+            <td>了解集成终端 shell 及其内容。</td>
+            <td><code>@terminal 如何撤销上次提交？</code></td>
+        </tr>
+    </table>
+
+    <h3>表 2：VS Code Copilot 聊天中的常用斜杠命令</h3>
+    <table>
+        <tr>
+            <th>斜杠命令</th>
+            <th>描述</th>
+            <th>示例用例</th>
+        </tr>
+        <tr>
+            <td><code>/explain</code></td>
+            <td>解释选定代码的工作原理。</td>
+            <td>选择代码并键入 <code>/explain</code>。</td>
+        </tr>
+        <tr>
+            <td><code>/fix</code></td>
+            <td>为选定代码中的问题提出修复建议。</td>
+            <td>选择包含错误的代码并键入 <code>/fix</code>。</td>
+        </tr>
+        <tr>
+            <td><code>/tests</code></td>
+            <td>为选定的代码生成单元测试。</td>
+            <td>选择一个函数并键入 <code>/tests</code>。</td>
+        </tr>
+    </table>
+
+    <h3>表 3：传统编码与氛围编码的比较</h3>
+    <table>
+        <tr>
+            <th>功能</th>
+            <th>传统编码</th>
+            <th>氛围编码</th>
+        </tr>
+        <tr>
+            <td>代码创建</td>
+            <td>手动编写每一行代码。</td>
+            <td>AI 根据自然语言描述生成代码。</td>
+        </tr>
+        <tr>
+            <td>技能要求</td>
+            <td>多年的编码经验和对编程概念的扎实理解。</td>
+            <td>即使没有深入的编码知识也可以访问。</td>
+        </tr>
+        <tr>
+            <td>速度和效率</td>
+            <td>可能耗时且重复。</td>
+            <td>显著加快开发过程。</td>
+        </tr>
+        <tr>
+            <td>重点和努力</td>
+            <td>强调语法、正确性和调试。</td>
+            <td>侧重于核心思想、逻辑和功能。</td>
+        </tr>
+        <tr>
+            <td>原型设计和迭代</td>
+            <td>可能需要大量的编码工作。</td>
+            <td>快速代码生成有助于快速原型设计。</td>
+        </tr>
+        <tr>
+            <td>错误处理和调试</td>
+            <td>手动且可能耗时。</td>
+            <td>AI 可以协助错误处理和调试。</td>
+        </tr>
+    </table>
+
+    <HR>
+
+    <h1>VS Code Copilot 快速開發工作規劃系統</h1>
+    <h1>使用 VS Code Copilot 快速開發工作規劃、執行、復盤系統</h1>
+
+    <h2>Vibe Coding Prompt：</h2>
+    <p>請使用 C# ASP.NET (Web Forms)，搭配 jQuery、CSS 和 Highcharts，快速建立一個簡單的工作規劃、執行、復盤系統。這個系統應該包含以下基本功能：</p>
+
+    <h3>1. 工作規劃 (Planning)</h3>
+    <ul>
+        <li>允許使用者建立新的工作項目或任務，每個項目應包含：
+            <ul>
+                <li>標題 (Title)</li>
+                <li>描述 (Description)</li>
+                <li>指派人員 (Assigned To，簡單文字輸入即可)</li>
+                <li>預計完成時間 (Due Date，日期選擇器)</li>
+                <li>狀態 (Status，下拉選單，選項包含：待辦、進行中、已完成、已取消)</li>
+            </ul>
+        </li>
+        <li>提供一個簡單的介面來顯示所有工作項目，並可依狀態篩選。</li>
+    </ul>
+
+    <h3>2. 工作執行 (Execution)</h3>
+    <ul>
+        <li>在工作項目列表中，允許使用者更新每個項目的狀態。</li>
+        <li>(可選) 允許使用者為每個工作項目添加進度更新或備註 (簡單文字輸入)。</li>
+    </ul>
+
+    <h3>3. 工作復盤 (Review)</h3>
+    <ul>
+        <li>使用 Highcharts 產生一個簡單的圓餅圖或長條圖，顯示不同狀態的工作項目數量 (例如：待辦、進行中、已完成)。</li>
+        <li>(可選) 提供一個簡單的報表頁面，顯示已完成的工作項目列表及其完成時間。</li>
+    </ul>
+
+    <h3>技術細節：</h3>
+    <ul>
+        <li>**後端 (C# ASP.NET Web Forms)：**
+            <ul>
+                <li>使用簡單的資料結構 (例如：List&lt;T&gt; 或 Dictionary&lt;TKey, TValue&gt;) 在記憶體中儲存工作項目資料，暫時不需要連接資料庫。</li>
+                <li>建立一個或多個 ASPX 頁面 (.aspx 和.aspx.cs 檔案) 來處理使用者介面和後端邏輯。</li>
+            </ul>
+        </li>
+        <li>**前端 (jQuery, CSS, Highcharts)：**
+            <ul>
+                <li>使用 jQuery 來處理前端的互動效果，例如：更新狀態、篩選工作項目、顯示圖表等。</li>
+                <li>使用簡單的 CSS 來美化頁面，使其易於閱讀和使用。</li>
+                <li>使用 Highcharts JavaScript 函式庫來產生報表圖表。請包含 Highcharts 的相關 JavaScript 和 CSS 檔案。</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>快速完成步驟 (Vibe Coding Flow)：</h3>
+    <ol>
+        <li>在 VS Code 中建立一個新的 ASP.NET Web Forms 專案。</li>
+        <li>開啟 Copilot 聊天視窗 (Ctrl+Alt+I)。</li>
+        <li>將上述的 vibe coding prompt 貼到 Copilot 聊天視窗中。</li>
+        <li>要求 Copilot 先建立主要的 ASPX 頁面結構 (包含必要的 HTML 元素和基本的 CSS 樣式)。</li>
+        <li>逐步引導 Copilot 實作每個功能區塊，例如：
+            <ul>
+                <li>建立 C# 類別來表示工作項目。</li>
+                <li>在後端程式碼中建立儲存工作項目的資料結構。</li>
+                <li>實作新增工作項目的表單和後端處理邏輯。</li>
+                <li>實作顯示工作項目列表的功能，並使用 jQuery 進行前端呈現。</li>
+                <li>實作更新工作項目狀態的功能。</li>
+                <li>整合 Highcharts 來產生報表圖表。</li>
+            </ul>
+        </li>
+        <li>在每個步驟中，仔細檢查 Copilot 生成的程式碼，並根據需要進行調整和優化。可以使用 Copilot 的 `/explain` 功能來理解程式碼。</li>
+        <li>如果遇到問題，可以更詳細地描述您的需求或提供範例程式碼，讓 Copilot 更好地理解。</li>
+        <li>重複上述步驟，直到系統的基本功能都實作完成。</li>
+        <li>最後，要求 Copilot 提供如何執行這個 ASP.NET Web Forms 專案的說明。</li>
+    </ol>
+
+    <p>請注意，這是一個簡化的系統，旨在快速完成基本功能。在實際開發中，您可能需要考慮更多細節，例如資料驗證、錯誤處理、安全性、以及使用資料庫來持久化儲存資料。</p>
+
+    <p>這個 prompt 的重點在於使用自然語言描述您想要的功能，並逐步引導 Copilot 完成開發任務。透過不斷地與 Copilot 溝通和迭代，您可以更有效率地完成這個工作。</p>
+
+</body>
+
+</html>

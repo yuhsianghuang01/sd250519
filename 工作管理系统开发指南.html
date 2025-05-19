@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>工作管理系统开发指南</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 20px auto }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db }
+        .badge { background: #3498db; color: white; padding: 3px 8px; border-radius: 5px }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 4px }
+        .step { margin-left: 20px; margin-bottom: 15px }
+        .highlight { background-color: #fff9e6; padding: 10px; border-radius: 5px }
+    </style>
+</head>
+<body>
+    <h1>工作管理系统开发指南 <span class="badge">增强版</span></h1>
+    
+    <h2>📁 项目模板结构</h2>
+    <div class="step">
+        <strong>1. 解决方案架构</strong>
+        <pre>[VSCode提示] 
+"创建ASP.NET Web Forms项目模板，包含分层架构"
+Solution Structure:
+MyWorkSystem/
+├── App_Code/
+│   └── Models/ (实体类)
+├── App_Data/ (数据库文件)
+├── Scripts/ (JS/CSS)
+├── Services/ (业务逻辑)
+├── Handlers/ (通用处理程序)
+└── Pages/ (ASPX页面)</pre>
+    </div>
+
+    <h2>🔧 功能模块实现</h2>
+    <div class="step">
+        <strong>2. 任务管理模块</strong>
+        <pre>[C#业务逻辑]
+"实现任务CRUD操作，包含软删除和审计字段"
+public class TaskService {
+    public List<TaskModel> GetAllTasks(int userId) {
+        return db.Tasks
+            .Where(t => t.UserID == userId && !t.IsDeleted)
+            .OrderByDescending(t => t.CreatedAt)
+            .ToList();
+    }
+
+    public void CreateTask(TaskModel task) {
+        task.CreatedAt = DateTime.Now;
+        task.UpdatedAt = DateTime.Now;
+        db.Tasks.InsertOnSubmit(task);
+        db.SubmitChanges();
+    }
+}</pre>
+    </div>
+
+    <div class="step">
+        <strong>3. 图表可视化模块</strong>
+        <pre>[Highcharts配置]
+"创建交互式折线图展示任务完成趋势"
+function initTrendChart() {
+    const options = {
+        chart: {
+            type: 'line',
+            zoomType: 'x'
+        },
+        title: { text: '任务完成趋势' },
+        xAxis: { type: 'datetime' },
+        yAxis: { title: { text: '任务数量' } },
+        plotOptions: {
+            line: {
+                dataLabels: { enabled: true },
+                enableMouseTracking: false
+            }
+        }
+    };
+
+    $.getJSON('/api/tasks/trend', function(data) {
+        options.series = [{
+            name: '完成量',
+            data: data.map(item => [Date.parse(item.date), item.count])
+        }];
+        $('#trendChart').highcharts(options);
+    });
+}</pre>
+    </div>
+
+    <h2>💾 数据持久化方案</h2>
+    <div class="step">
+        <strong>4. 数据库上下文</strong>
+        <pre>[LINQ to SQL]
+"创建数据库上下文类，实现连接管理和事务处理"
+public class WorkSystemDataContext : DataContext {
+    public WorkSystemDataContext() : 
+        base(ConfigurationManager.ConnectionStrings["Default"].ConnectionString) {}
+
+    public Table<Task> Tasks;
+    public Table<Project> Projects;
+
+    public void SaveChanges() {
+        try {
+            SubmitChanges(ConflictMode.ContinueOnConflict);
+        }
+        catch (ChangeConflictException) {
+            foreach (var conflict in ChangeConflicts) {
+                conflict.Resolve(RefreshMode.KeepCurrentValues);
+            }
+        }
+    }
+}</pre>
+    </div>
+
+    <h2>🚀 VSCode Copilot加速技巧</h2>
+    <div class="highlight">
+        <h3>高效开发提示词模板</h3>
+        <ul>
+            <li><strong>页面创建：</strong>"生成带FormView的任务编辑页面，包含验证控件"</li>
+            <li><strong>API开发：</strong>"创建RESTful API端点，支持GET/POST方法和CORS"</li>
+            <li><strong>样式生成：</strong>"创建响应式卡片布局，移动端适配，使用CSS Grid"</li>
+            <li><strong>交互实现：</strong>"实现拖拽上传功能，支持多文件和进度条"</li>
+        </ul>
+    </div>
+
+    <h2>🧩 模块化开发建议</h2>
+    <div class="step">
+        <strong>5. 可复用组件</strong>
+        <pre>[用户控件开发]
+"创建通用分页控件，支持自定义样式和回调"
+public partial class PagerControl : System.Web.UI.UserControl {
+    public int TotalPages { get; set; }
+    public int CurrentPage { get; set; }
+    
+    protected void Page_Load(object sender, EventArgs e) {
+        if (!IsPostBack) {
+            rptPager.DataSource = Enumerable.Range(1, TotalPages);
+            rptPager.DataBind();
+        }
+    }
+}</pre>
+    </div>
+
+    <h2>🔒 安全增强方案</h2>
+    <div class="step">
+        <strong>6. 权限管理模块</strong>
+        <pre>[角色验证实现]
+"实现基于角色的访问控制，包含权限缓存机制"
+public class RoleBasedSecurity {
+    private const string CacheKey = "UserPermissions_";
+    
+    public bool HasAccess(string requiredRole) {
+        var cacheKey = $"{CacheKey}{CurrentUser.Id}";
+        var permissions = HttpContext.Current.Cache[cacheKey] as List<string>;
+        
+        if (permissions == null) {
+            permissions = db.GetUserRoles(CurrentUser.Id).ToList();
+            HttpContext.Current.Cache.Insert(cacheKey, permissions, null, 
+                DateTime.Now.AddMinutes(30), TimeSpan.Zero);
+        }
+        
+        return permissions.Contains(requiredRole);
+    }
+}</pre>
+    </div>
+
+    <h2>📦 部署与优化</h2>
+    <div class="step">
+        <strong>7. 发布配置</strong>
+        <pre>[Web.config优化]
+"配置生产环境设置，包含压缩、缓存和错误处理"
+<configuration>
+    <system.webServer>
+        <urlCompression doStaticCompression="true" />
+        <staticContent>
+            <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="7.00:00:00" />
+        </staticContent>
+        <httpErrors errorMode="Custom">
+            <remove statusCode="404" />
+            <error statusCode="404" path="/error/404.html" type="ResponseRewrite" />
+        </httpErrors>
+    </system.webServer>
+</configuration></pre>
+    </div>
+</body>
+</html>
