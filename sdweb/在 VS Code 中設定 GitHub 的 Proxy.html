@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在 VS Code 中設定 GitHub 的 Proxy 連接方式</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0366d6;
+            border-bottom: 2px solid #eaecef;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #24292e;
+            margin-top: 25px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eaecef;
+        }
+
+        h3 {
+            color: #454b52;
+        }
+
+        code {
+            background-color: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            margin: 16px 0;
+        }
+
+        .note {
+            background-color: #fffbdd;
+            border-left: 4px solid #d9b200;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .command {
+            background-color: #2d333b;
+            color: #c9d1d9;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .step {
+            margin-bottom: 15px;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>在 VS Code 中設定 GitHub 的 Proxy 連接方式</h1>
+    <p>要在 VS Code 中設定代理伺服器來連接 GitHub，可以通過以下幾種方法：</p>
+
+    <h2>方法一：通過 Git 設定全局代理</h2>
+    <p>這是最常用的方法，因為 VS Code 中的 Git 操作會使用系統的 Git 設定：</p>
+
+    <div class="step">
+        <strong>1. 打開終端機</strong> (在 VS Code 中可以按 <code>Ctrl+`</code> 或 <code>Terminal</code> →
+        <code>New Terminal</code>)
+    </div>
+
+    <div class="step">
+        <strong>2. 設定 HTTP 代理：</strong>
+        <div class="command">git config --global http.proxy http://username:password@proxy-server:port</div>
+    </div>
+
+    <div class="step">
+        <strong>3. 設定 HTTPS 代理：</strong>
+        <div class="command">git config --global https.proxy http://username:password@proxy-server:port</div>
+    </div>
+
+    <div class="step">
+        <strong>4. 如果代理需要基本驗證</strong>，請確保用戶名和密碼正確設定。如果密碼中含有特殊字符，需要進行 URL 編碼（例如，將 <code>@</code> 替換為 <code>%40</code>）：
+        <div class="command">git config --global http.proxy http://username:pass%40word@proxy-server:port</div>
+    </div>
+
+    <div class="step">
+        <strong>5. 驗證設定：</strong>
+        <div class="command">git config --global --get http.proxy<br>git config --global --get https.proxy</div>
+    </div>
+
+    <h2>方法二：在 VS Code 設定中配置代理</h2>
+
+    <div class="step">
+        <strong>1. 在 VS Code 中</strong>，按 <code>Ctrl+,</code> (或點擊 <code>File</code> → <code>Preferences</code> →
+        <code>Settings</code>) 開啟設定
+    </div>
+
+    <div class="step">
+        <strong>2. 搜尋</strong> <code>proxy</code>
+    </div>
+
+    <div class="step">
+        <strong>3. 找到 <code>Http: Proxy</code> 設定</strong>並填入您的代理伺服器地址：
+        <pre>http://username:password@proxy-server:port</pre>
+    </div>
+
+    <div class="step">
+        <strong>4. 此設定會影響 VS Code 本身的連線</strong>，包括擴充套件市場、更新檢查等
+    </div>
+
+    <h2>方法三：設定環境變數</h2>
+
+    <div class="step">
+        <strong>1. 可以在系統環境變數中設定 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code>：</strong>
+        <p>在 Windows 中：</p>
+        <div class="command">set HTTP_PROXY=http://username:password@proxy-server:port<br>set
+            HTTPS_PROXY=http://username:password@proxy-server:port</div>
+        <p>在 Linux/Mac 中：</p>
+        <div class="command">export HTTP_PROXY=http://username:password@proxy-server:port<br>export
+            HTTPS_PROXY=http://username:password@proxy-server:port</div>
+    </div>
+
+    <div class="step">
+        <strong>2. 這些環境變數會被許多工具識別</strong>，包括 Git 和 VS Code
+    </div>
+
+    <h2>針對 GitHub Copilot 的特殊設定</h2>
+    <p>如果您特別是在使用 GitHub Copilot 時遇到連接問題：</p>
+
+    <div class="step">
+        <strong>1. 在 VS Code 中</strong>，按 <code>Ctrl+Shift+P</code> 打開命令面板
+    </div>
+
+    <div class="step">
+        <strong>2. 輸入</strong> <code>settings.json</code> 並選擇 <code>Preferences: Open Settings (JSON)</code>
+    </div>
+
+    <div class="step">
+        <strong>3. 在 settings.json 文件中</strong>，添加以下設定：
+        <pre>{
+  "github.copilot.advanced": {
+    "proxy": "http://username:password@proxy-server:port"
+  }
+}</pre>
+    </div>
+
+    <h2>疑難排解</h2>
+    <p>如果設定代理後仍然連接失敗：</p>
+
+    <div class="step">
+        <strong>1. 檢查代理格式</strong>：確保格式正確，特別是如果包含用戶名和密碼時
+    </div>
+
+    <div class="step">
+        <strong>2. 測試代理</strong>：使用 <code>curl</code> 測試代理是否正常工作：
+        <div class="command">curl -x http://username:password@proxy-server:port https://api.github.com/zen</div>
+    </div>
+
+    <div class="step">
+        <strong>3. SSL 證書問題</strong>：如果遇到 SSL 證書驗證問題，可能需要設定：
+        <div class="command">git config --global http.sslVerify false</div>
+        <div class="note">注意：這會降低安全性，只在必要時使用</div>
+    </div>
+
+    <div class="step">
+        <strong>4. 移除代理設定</strong>：如果需要移除代理設定：
+        <div class="command">git config --global --unset http.proxy<br>git config --global --unset https.proxy</div>
+    </div>
+
+    <div class="step">
+        <strong>5. 重啟 VS Code</strong>：完成設定後重啟 VS Code 以確保變更生效
+    </div>
+
+    <p>這些設定應該能幫助 VS Code 通過代理伺服器連接到 GitHub，解決由於網路限制而導致的連接問題。</p>
+</body>
+
+</html>
