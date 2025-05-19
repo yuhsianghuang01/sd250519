@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>C#/.NET 开发者指南</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db }
+        .badge { background: #3498db; color: white; padding: 3px 8px; border-radius: 5px }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 4px }
+    </style>
+</head>
+<body>
+    <h1>C#/.NET 开发者指南 <span class="badge">2025版</span></h1>
+    
+    <h2>🚀 核心特性速查</h2>
+    <ul>
+        <li><strong>字符串格式化：</strong>使用<code>IFormattable</code>接口实现自定义格式化[[5]]</li>
+        <li><strong>匿名类型：</strong>var user = new { Name = "John", Age = 30 };</li>
+        <li><strong>扩展方法：</strong>public static string ToTitleCase(this string s) { ... }</li>
+    </ul>
+
+    <h2>🔧 开发技巧宝典</h2>
+    <div style="margin-left: 20px">
+        <p><strong>LINQ优化：</strong>使用<code>AsParallel()</code>实现并行查询</p>
+        <pre>var result = data.AsParallel()
+            .Where(x => x.IsActive)
+            .OrderByDescending(x => x.Score);</pre>
+        
+        <p><strong>错误处理：</strong>结合<code>try/with</code>和全局异常过滤器</p>
+        <pre>try {
+    // 业务代码
+} catch (Exception ex) when (ex is not CriticalException) {
+    // 日志记录
+}</pre>
+    </div>
+
+    <h2>🛠️ 工具推荐</h2>
+    <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%">
+        <tr><th>工具</th><th>功能</th><th>推荐指数</th></tr>
+        <tr><td>VS Code C# Dev Kit</td><td>智能提示/重构/调试</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>ReSharper</td><td>代码分析/架构优化</td><td>⭐⭐⭐⭐☆</td></tr>
+        <tr><td>NuGet Package Explorer</td><td>包管理/发布</td><td>⭐⭐⭐⭐</td></tr>
+    </table>
+
+    <h2>📚 最佳实践</h2>
+    <ul>
+        <li>代码规范：遵循微软官方编码约定[[7]]</li>
+        <li>性能优化：优先使用<code>StringBuilder</code>拼接字符串</li>
+        <li>文档生成：使用XML注释配合<code>DocFX</code>生成API文档[[7]]</li>
+    </ul>
+
+    <h2>🧩 版本特性对比</h2>
+    <pre>.NET Core 3.1 → .NET 5 → .NET 6 → .NET 8
+    ↓                       ↓
+LTS支持（2022）        单文件发布改进
+                        AOT编译支持</pre>
+
+    <h2>📌 参考资源</h2>
+    <ul>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/ " target="_blank">官方文档</a></li>
+        <li><a href="https://github.com/dotnet/roslyn " target="_blank">Roslyn编译器源码</a></li>
+        <li><a href="https://devblogs.microsoft.com/dotnet/ " target="_blank">.NET 官方博客</a></li>
+    </ul>
+</body>
+</html>
